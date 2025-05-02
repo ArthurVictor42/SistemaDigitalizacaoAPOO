@@ -1,5 +1,7 @@
 package Servico;
 
+import java.util.ArrayList;
+
 import Entidades.Usuario;
 import Interfaces.IUsuarioRepositorio;
 
@@ -14,15 +16,19 @@ public class UsuarioServico {
         usuarioRepositorio.cadastrar(usuario);
     }
 
-    public void excluir(Usuario usuario) {
-        usuarioRepositorio.remover(usuario);
+    public boolean excluir(int codigo) {
+        return usuarioRepositorio.remover(codigo);
     }
 
-    public void listar() {
-        usuarioRepositorio.listarUsuario().forEach(System.out::println);
+    public ArrayList<Usuario> listar() {
+        return usuarioRepositorio.listarUsuario();
     }
 
-    public boolean alteraSenha(String email, String novaSenha) {
-        return usuarioRepositorio.alteraSenha(email, novaSenha);
+    public boolean alteraUsuario(int id, String nome, String email, String novaSenha, String cpf) {
+        return usuarioRepositorio.alteraUsuario(id, nome, email, novaSenha, cpf);
+    }
+
+    public Usuario buscarPorId(int id){
+        return usuarioRepositorio.buscarPorId(id);
     }
 }

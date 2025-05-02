@@ -1,5 +1,7 @@
 package Servico;
 
+import java.util.ArrayList;
+
 import Entidades.Documento;
 import Interfaces.IDocumentoRepositorio;
 
@@ -14,15 +16,19 @@ public class DocumentoServico {
         documentoRepositorio.cadastrar(documento);
     }
 
-    public void excluir(Documento documento) {
-        documentoRepositorio.remover(documento);
+    public boolean excluir(int id) {
+       return documentoRepositorio.remover(id);
     }
 
-    public void listar() {
-        documentoRepositorio.listarDocumento().forEach(System.out::println);
+    public ArrayList<Documento> listar() {
+       return documentoRepositorio.listarDocumento();
     }
 
-    public boolean alteraDescricao(int idDocumento, String novaDescricao) {
-        return documentoRepositorio.alteraDescricao(idDocumento, novaDescricao);
+    public boolean alteraDescricao(int idDocumento, String novaDescricao, String novoNome) {
+        return documentoRepositorio.alterarDocumento(idDocumento, novoNome,novaDescricao);
+    }
+
+    public Documento buscarPorId(int id){
+        return documentoRepositorio.buscarPorId(id);
     }
 }

@@ -6,9 +6,12 @@ import Entidades.Categoria;
 public interface ICategoriaRepositorio {
     void cadastrar(Categoria categoria);
 
-    boolean remover(Categoria categoria);
+    boolean remover(int id);
 
     ArrayList<Categoria> listarCategoria();
 
-    boolean alteraNome(int id, String novoNome);
+    boolean alteraCategoria(int id, String novoNome);
+
+    Categoria buscarPorId(int id);
+
 }

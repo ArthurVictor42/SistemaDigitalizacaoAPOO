@@ -16,21 +16,41 @@ public class UsuarioRepositorio implements IUsuarioRepositorio {
         this.listaUsuario.add(usuario);
     }
 
-    public boolean remover(Usuario usuario) {
-        return listaUsuario.remove(usuario);
+    public boolean remover(int codigo) {
+        for(Usuario usuarios: listaUsuario){
+            if(usuarios.getId() == codigo){
+                listaUsuario.remove(usuarios);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public ArrayList<Usuario> listarUsuario() {
         return listaUsuario;
     }
 
-    public boolean alteraSenha(String email, String novaSenha) {
+    public boolean alteraUsuario(int id, String nome, String email, String novaSenha, String cpf) {
         for (Usuario usuario : listaUsuario) {
-            if (usuario.getEmailUsuario().equals(email)) {
+            if (usuario.getId() == id) {
+                usuario.setNomeUsuario(nome);
+                usuario.setEmailUsuario(email);
                 usuario.setSenhaUsuario(novaSenha);
+                usuario.setCpf(cpf);
                 return true;
             }
         }
         return false;
+    }
+
+    public Usuario buscarPorId(int id) {
+        for(Usuario usuarios: listaUsuario){
+            if(usuarios.getId() == id){
+                return usuarios;
+            }
+        }
+
+        return null;
     }
 }

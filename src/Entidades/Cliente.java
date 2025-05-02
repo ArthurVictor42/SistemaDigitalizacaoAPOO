@@ -1,14 +1,12 @@
 package Entidades;
 
-public class Cliente {
+public abstract class Cliente {
     private String NomeCliente; 
-    private String CPF; 
-    private String tipoEmpresa; 
+    private int CodigoCliente; 
 
-    public Cliente(String NomeCliente, String CPF, String tipo){
+    public Cliente(String NomeCliente, int CodigoCliente){
         this.NomeCliente = NomeCliente;
-        this.CPF = CPF;
-        this.tipoEmpresa = tipo;
+        this.CodigoCliente = CodigoCliente;
     }
 
     public void setNomeCliente(String NomeCliente) {
@@ -19,24 +17,17 @@ public class Cliente {
         return this.NomeCliente;
     }
 
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
+
+    public void setCodigoClientee(int CodigoCliente) {
+        this.CodigoCliente = CodigoCliente;
     }
 
-    public String getCPF() {
-        return this.CPF;
-    }
-
-    public void setTipoEmpresa(String tipoEmpresa) {
-        this.tipoEmpresa = tipoEmpresa;
-    }
-
-    public String getTipoEmpresa() {
-        return this.tipoEmpresa;
+    public int getCodigoCliente() {
+        return this.CodigoCliente;
     }
 
     @Override
     public String toString() {
-        return "nome Cliente='" + getNomeCliente() + ", CPF='" + getCPF();
+        return "nome Cliente='" + getNomeCliente() + ", Codigo Cliente='" +  getCodigoCliente();
     }
 }

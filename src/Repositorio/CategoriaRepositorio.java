@@ -16,15 +16,22 @@ public class CategoriaRepositorio implements ICategoriaRepositorio {
         listaCategoria.add(categoria);
     }
 
-    public boolean remover(Categoria categoria) {
-        return listaCategoria.remove(categoria);
+    public boolean remover(int id) {
+       for(Categoria categorias: listaCategoria){
+            if(categorias.getId() == id){
+                listaCategoria.remove(categorias);
+                return true;
+            }
+       }
+
+       return false;
     }
 
     public ArrayList<Categoria> listarCategoria() {
         return listaCategoria;
     }
 
-    public boolean alteraNome(int id, String novoNome) {
+    public boolean alteraCategoria(int id, String novoNome) {
         for (Categoria categoria : listaCategoria) {
             if (categoria.getId() == id) {
                 categoria.setNomeCategoria(novoNome);
@@ -32,5 +39,15 @@ public class CategoriaRepositorio implements ICategoriaRepositorio {
             }
         }
         return false;
+    }
+
+    public Categoria buscarPorId(int id){
+        for(Categoria categorias : listaCategoria){
+            if(categorias.getId() == id){
+                return categorias;
+            }
+        }
+
+        return null;
     }
 }

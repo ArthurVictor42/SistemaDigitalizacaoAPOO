@@ -1,5 +1,7 @@
 package Servico;
 
+import java.util.ArrayList;
+
 import Entidades.Categoria;
 import Interfaces.ICategoriaRepositorio;
 
@@ -14,15 +16,19 @@ public class CategoriaServico {
         categoriaRepositorio.cadastrar(categoria);
     }
 
-    public void excluir(Categoria categoria) {
-        categoriaRepositorio.remover(categoria);
+    public boolean excluir(int id) {
+        return categoriaRepositorio.remover(id);
     }
 
-    public void listar() {
-        categoriaRepositorio.listarCategoria().forEach(System.out::println);
+    public ArrayList<Categoria> listar() {
+       return categoriaRepositorio.listarCategoria();
     }
 
-    public boolean alteraNome(int id, String novoNome) {
-        return categoriaRepositorio.alteraNome(id, novoNome);
+    public boolean alteraCategoria(int id, String novoNome) {
+        return categoriaRepositorio.alteraCategoria(id, novoNome);
+    }
+
+    public Categoria buscarPorId(int id){
+        return categoriaRepositorio.buscarPorId(id);
     }
 }

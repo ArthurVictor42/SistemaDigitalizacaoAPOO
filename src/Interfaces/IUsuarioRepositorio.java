@@ -6,9 +6,11 @@ import Entidades.Usuario;
 public interface IUsuarioRepositorio {
     void cadastrar(Usuario usuario);
 
-    boolean remover(Usuario usuario);
+    boolean remover(int codigo);
 
     ArrayList<Usuario> listarUsuario();
 
-    boolean alteraSenha(String email, String novaSenha);
+    boolean alteraUsuario(int id, String nome, String email, String novaSenha, String cpf);
+
+    Usuario buscarPorId(int id);
 }

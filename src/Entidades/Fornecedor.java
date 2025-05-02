@@ -3,12 +3,12 @@ package Entidades;
 public class Fornecedor {
     private String nomeFornecedor;
     private String CNPJ;
-    private String endereçoFornecedor;
+    private String enderecoFornecedor;
 
-    public Fornecedor(String nomeFornecedor, String CNPJ, String endereçoFornecedor){
+    public Fornecedor(String nomeFornecedor, String CNPJ, String enderecoFornecedor){
         this.nomeFornecedor = nomeFornecedor;
         this.CNPJ = CNPJ;
-        this.endereçoFornecedor = endereçoFornecedor;
+        this.enderecoFornecedor = enderecoFornecedor;
     }
 
     public void setNomeFornecedor(String nomeFornecedor) {
@@ -19,12 +19,12 @@ public class Fornecedor {
         return this.nomeFornecedor;
     }
 
-    public void setEndereçoFornecedor(String endereçoFornecedor) {
-        this.endereçoFornecedor = endereçoFornecedor;
+    public void setEnderecoFornecedor(String enderecoFornecedor) {
+        this.enderecoFornecedor = enderecoFornecedor;
     }
 
-    public String getEndereçoFornecedor() {
-        return this.endereçoFornecedor;
+    public String getEnderecoFornecedor() {
+        return this.enderecoFornecedor;
     }
 
     public void setCNPJ(String cNPJ) {
@@ -37,6 +37,6 @@ public class Fornecedor {
 
     @Override
     public String toString() {
-        return "Nome do Fornecedor= " + getNomeFornecedor() + ", Endereço do Fornecedor= " + getEndereçoFornecedor() + ", CNPJ= " + getCNPJ() + ""; 
+        return "Nome do Fornecedor= " + getNomeFornecedor() + ", Endereço do Fornecedor= " + getEnderecoFornecedor() + ", CNPJ= " + getCNPJ() + ""; 
     }    
 }

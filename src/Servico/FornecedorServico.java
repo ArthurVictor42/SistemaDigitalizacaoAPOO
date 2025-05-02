@@ -1,5 +1,7 @@
 package Servico;
 
+import java.util.ArrayList;
+
 import Entidades.Fornecedor;
 import Interfaces.IFornecedorRepositorio;
 
@@ -14,15 +16,19 @@ public class FornecedorServico {
         fornecedorRepositorio.cadastrar(fornecedor);
     }
 
-    public void excluir(Fornecedor fornecedor) {
-        fornecedorRepositorio.remover(fornecedor);
+    public boolean excluir(String CNPJ) {
+        return fornecedorRepositorio.remover(CNPJ);
     }
 
-    public void listar() {
-        fornecedorRepositorio.listarFornecedor().forEach(System.out::println);
+    public ArrayList<Fornecedor> listar() {
+        return fornecedorRepositorio.listarFornecedor();
     }
 
-    public boolean alteraCNPJ(String nomeFornecedor, String novoCNPJ) {
-        return fornecedorRepositorio.alteraCNPJ(nomeFornecedor, novoCNPJ);
+    public boolean alteraFornecedor(String nomeFornecedor, String CNPJ, String enderecoFornecedor) {
+        return fornecedorRepositorio.alteraFornecedor(nomeFornecedor, CNPJ, enderecoFornecedor );
+    }
+
+    public Fornecedor buscarPorCNPJ(String CNPJ){
+        return fornecedorRepositorio.buscarPorCNPJ(CNPJ);
     }
 }

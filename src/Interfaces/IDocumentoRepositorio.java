@@ -6,9 +6,11 @@ import Entidades.Documento;
 public interface IDocumentoRepositorio {
     void cadastrar(Documento documento);
 
-    boolean remover(Documento documento);
+    boolean remover(int id);
 
     ArrayList<Documento> listarDocumento();
 
-    boolean alteraDescricao(int id, String novaDescricao);
+    boolean alterarDocumento(int id, String novaDescricao, String novoNome);
+
+    Documento buscarPorId(int id);
 }
