@@ -6,32 +6,31 @@ import Interfaces.IDocumentoRepositorio;
 import java.util.ArrayList;
 
 public class DocumentoRepositorio implements IDocumentoRepositorio {
-    private ArrayList<Documento> listadocumento;
+    private ArrayList<Documento> listaDocumento;
 
-    public DocumentoRepositorio(ArrayList<Documento> documentos){
-        this.listadocumento = documentos;
+    public DocumentoRepositorio(ArrayList<Documento> documentos) {
+        this.listaDocumento = documentos;
     }
 
-    public void Cadastrar(Documento documento){
-        listadocumento.add(documento);
+    public void cadastrar(Documento documento) {
+        listaDocumento.add(documento);
     }
 
-    public boolean Remover(Documento documento){
-        return listadocumento.remove(documento);
+    public boolean remover(Documento documento) {
+        return listaDocumento.remove(documento);
     }
 
-    public ArrayList<Documento> ListarDocumento(){
-        return listadocumento;
+    public ArrayList<Documento> listarDocumento() {
+        return listaDocumento;
     }
 
-    public void AlteraDescricao(Documento documento){
-        for(Documento documentos: listadocumento){
-            if(documentos.getDescricaoDocumento().equals(documento.getDescricaoDocumento())){
-                documentos.setDescricaoDocumento(documento.getDescricaoDocumento());
-                break;
+    public boolean alteraDescricao(int id, String novaDescricao) {
+        for (Documento documento : listaDocumento) {
+            if (documento.getIdDocumento() == id) {
+                documento.setDescricaoDocumento(novaDescricao);
+                return true;
             }
         }
+        return false;
     }
-
-
 }
