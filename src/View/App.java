@@ -78,7 +78,7 @@ public class App {
     public static void MenuPrincipal() {
         int opcao = 0;
 
-        while (opcao != 7) {
+        do{
             System.out.println("\n==== Menu Principal ====");
             System.out.println("1 - Menu Cliente Físico");
             System.out.println("2 - Menu Cliente Jurídico");
@@ -117,26 +117,24 @@ public class App {
                     System.out.println("Opção inválida.");
                     break;
             }
-        }
+        } while(opcao != 7);
 
-        teclado.close();
     }
 
 
     public static void menuClienteFisico(){
         int opcao = 0;
 
-        System.out.println("\n==== Menu Cliente Fisico ====");
-        System.out.println("1 - Cadastra Cliente");
-        System.out.println("2 - Listar Clientes");
-        System.out.println("3 - Remover Cliente");
-        System.out.println("4 - Altera Cliente");
-        System.out.println("5 - Sair");
-        System.out.print("Sua escolha: ");
-        opcao = teclado.nextInt();
-        teclado.nextLine();
-
-        while(opcao != 5){
+        do{
+            System.out.println("\n==== Menu Cliente Fisico ====");
+            System.out.println("1 - Cadastra Cliente");
+            System.out.println("2 - Listar Clientes");
+            System.out.println("3 - Remover Cliente");
+            System.out.println("4 - Altera Cliente");
+            System.out.println("5 - Sair");
+            System.out.print("Sua escolha: ");
+            opcao = teclado.nextInt();
+    
             switch (opcao) {
                 case 1:
                     cadastraClienteFisico();
@@ -155,11 +153,9 @@ public class App {
                     break;
                 default:
                     System.out.println("Opção Invalida!");
-                    break;
-            }
-        }
 
-        teclado.close();
+            }
+        } while(opcao != 5);
     }
 
     // CRUD completo de Cliente Fisico!
@@ -236,17 +232,17 @@ public class App {
 
     public static void menuClienteJuridico(){
         int opcao = 0;
-        System.out.println("\n==== Menu Cliente Juridico ====");
-        System.out.println("1 - Cadastra Cliente");
-        System.out.println("2 - Listar Clientes");
-        System.out.println("3 - Remover Cliente");
-        System.out.println("4 - Altera Cliente");
-        System.out.println("5 - Sair");
-        System.out.print("Sua escolha: ");
-        opcao = teclado.nextInt();
-        teclado.nextLine();
 
-        while(opcao != 5){
+        do{
+            System.out.println("\n==== Menu Cliente Juridico ====");
+            System.out.println("1 - Cadastra Cliente");
+            System.out.println("2 - Listar Clientes");
+            System.out.println("3 - Remover Cliente");
+            System.out.println("4 - Altera Cliente");
+            System.out.println("5 - Sair");
+            System.out.print("Sua escolha: ");
+            opcao = teclado.nextInt();
+
             switch (opcao) {
                 case 1:
                     cadastraClienteJuridico();
@@ -267,9 +263,7 @@ public class App {
                     System.out.println("Opção Invalida!");
                     break;
             }
-        }
-
-        teclado.close();
+        } while(opcao != 5);
     }
 
     // CRUD de Cliente Juridico
@@ -346,17 +340,17 @@ public class App {
 
     public static void menuCategoria(){
         int opcao = 0;
-        System.out.println("\n==== Menu Categoria ====");
-        System.out.println("1 - Cria Categoria");
-        System.out.println("2 - Listar Categoria");
-        System.out.println("3 - Remover Categoria");
-        System.out.println("4 - Altera Categoria");
-        System.out.println("5 - Sair");
-        System.out.print("Sua escolha: ");
-        opcao = teclado.nextInt();
-        teclado.nextLine();
 
-        while(opcao != 5){
+        do{
+            System.out.println("\n==== Menu Categoria ====");
+            System.out.println("1 - Cria Categoria");
+            System.out.println("2 - Listar Categoria");
+            System.out.println("3 - Remover Categoria");
+            System.out.println("4 - Altera Categoria");
+            System.out.println("5 - Sair");
+            System.out.print("Sua escolha: ");
+            opcao = teclado.nextInt();
+
             switch (opcao) {
                 case 1:
                     cadastraCategoria();
@@ -377,9 +371,7 @@ public class App {
                     System.out.println("Opção Invalida!");
                     break;
             }
-        }
-
-        teclado.close();
+        }while(opcao != 5);
     }
 
     public static void cadastraCategoria() {
@@ -444,17 +436,17 @@ public class App {
 
     public static void menuDocumento(){
         int opcao = 0;
-        System.out.println("\n==== Menu Documento ====");
-        System.out.println("1 - Salvar Documento");
-        System.out.println("2 - Listar Documento");
-        System.out.println("3 - Remover Documento");
-        System.out.println("4 - Altera Documento");
-        System.out.println("5 - Sair");
-        System.out.print("Sua escolha: ");
-        opcao = teclado.nextInt();
-        teclado.nextLine();
 
-        while(opcao != 5){
+        do{
+            System.out.println("\n==== Menu Documento ====");
+            System.out.println("1 - Salvar Documento");
+            System.out.println("2 - Listar Documento");
+            System.out.println("3 - Remover Documento");
+            System.out.println("4 - Altera Documento");
+            System.out.println("5 - Sair");
+            System.out.print("Sua escolha: ");
+            opcao = teclado.nextInt();
+
             switch (opcao) {
                 case 1:
                     cadastraDocumento();
@@ -475,9 +467,7 @@ public class App {
                     System.out.println("Opção Invalida!");
                     break;
             }
-        }
-
-        teclado.close();
+        }while(opcao != 5);
     }
 
     public static void cadastraDocumento() {
@@ -546,17 +536,17 @@ public class App {
     
     public static void menuFornecedor(){
         int opcao = 0;
-        System.out.println("\n==== Menu Fornecedor ====");
-        System.out.println("1 - Cadastra Fornecedor");
-        System.out.println("2 - Listar Fornecedor");
-        System.out.println("3 - Remover Fornecedor");
-        System.out.println("4 - Altera Fornecedor");
-        System.out.println("5 - Sair");
-        System.out.print("Sua escolha: ");
-        opcao = teclado.nextInt();
-        teclado.nextLine();
 
-        while(opcao != 5){
+        do{
+            System.out.println("\n==== Menu Fornecedor ====");
+            System.out.println("1 - Cadastra Fornecedor");
+            System.out.println("2 - Listar Fornecedor");
+            System.out.println("3 - Remover Fornecedor");
+            System.out.println("4 - Altera Fornecedor");
+            System.out.println("5 - Sair");
+            System.out.print("Sua escolha: ");
+            opcao = teclado.nextInt();
+
             switch (opcao) {
                 case 1:
                     cadastraFornecedor();
@@ -577,9 +567,7 @@ public class App {
                     System.out.println("Opção Invalida!");
                     break;
             }
-        }
-
-        teclado.close();
+        }while(opcao != 5);
     }
 
     public static void cadastraFornecedor() {
@@ -650,17 +638,17 @@ public class App {
 
     public static void menuUsuario(){
         int opcao = 0;
-        System.out.println("\n==== Menu Usuario ====");
-        System.out.println("1 - Cadastra Usuario");
-        System.out.println("2 - Listar Usuario");
-        System.out.println("3 - Remover Usuario");
-        System.out.println("4 - Altera Usuario");
-        System.out.println("5 - Sair");
-        System.out.print("Sua escolha: ");
-        opcao = teclado.nextInt();
-        teclado.nextLine();
 
-        while(opcao != 5){
+        do{
+            System.out.println("\n==== Menu Usuario ====");
+            System.out.println("1 - Cadastra Usuario");
+            System.out.println("2 - Listar Usuario");
+            System.out.println("3 - Remover Usuario");
+            System.out.println("4 - Altera Usuario");
+            System.out.println("5 - Sair");
+            System.out.print("Sua escolha: ");
+            opcao = teclado.nextInt();
+            
             switch (opcao) {
                 case 1:
                     cadastraUsuario();
@@ -681,9 +669,7 @@ public class App {
                     System.out.println("Opção Invalida!");
                     break;
             }
-        }
-
-        teclado.close();
+        } while(opcao != 5);
     }
 
     public static void cadastraUsuario() {
