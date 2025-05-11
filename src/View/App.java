@@ -191,7 +191,7 @@ public class App {
 
     // CRUD completo de Cliente Fisico!
 
-    public static void cadastraClienteFisico(){
+    private static void cadastraClienteFisico(){
         System.out.println("\n==== Cadastro de Cliente Físico ====");
 
         System.out.print("Código do cliente: ");
@@ -215,7 +215,7 @@ public class App {
         System.out.println("Cliente cadastrado com sucesso!");
     }
     
-    public static void listarClienteFisico(){
+    private static void listarClienteFisico(){
         System.out.println("\n==== Lista de Clientes Físicos ====");
         List<ClienteFisico> clientes = ClienteFisiServi.listar();
     
@@ -231,7 +231,7 @@ public class App {
         }
     }
     
-    public static void removeClienteFisico(){
+    private static void removeClienteFisico(){
         System.out.println("\n==== Remover Cliente Físico ====");
         System.out.print("Informe o código do cliente: ");
         int codigo = teclado.nextInt();
@@ -253,7 +253,7 @@ public class App {
         
     }
     
-    public static void alteraClienteFisico(){
+    private static void alteraClienteFisico(){
         System.out.println("\n==== Alterar Cliente Físico ====");
         System.out.print("Informe o código do cliente a ser alterado: ");
         int codigo = teclado.nextInt();
@@ -315,7 +315,7 @@ public class App {
 
     // CRUD de Cliente Juridico
 
-    public static void cadastraClienteJuridico(){
+    private static void cadastraClienteJuridico(){
         System.out.println("\n==== Cadastro de Cliente Físico ====");
 
         System.out.print("Código do cliente: ");
@@ -339,7 +339,7 @@ public class App {
         System.out.println("Cliente cadastrado com sucesso!");
     }
     
-    public static void listarClienteJuridico(){
+    private static void listarClienteJuridico(){
         System.out.println("\n==== Lista de Clientes Físicos ====");
         List<ClienteJuridico> clientes = ClienteJuriServi.listar();
     
@@ -355,7 +355,7 @@ public class App {
         }
     }
     
-    public static void removeClienteJuridico(){
+    private static void removeClienteJuridico(){
         System.out.println("\n==== Remover Cliente Físico ====");
         System.out.print("Informe o código do cliente: ");
         int codigo = teclado.nextInt();
@@ -377,7 +377,7 @@ public class App {
         
     }
     
-    public static void alteraClienteJuridico(){
+    private static void alteraClienteJuridico(){
         System.out.println("\n==== Alterar Cliente Físico ====");
         System.out.print("Informe o código do cliente a ser alterado: ");
         int codigo = teclado.nextInt();
@@ -437,7 +437,7 @@ public class App {
         }while(opcao != 5);
     }
 
-    public static void cadastraCategoria() {
+    private static void cadastraCategoria() {
         System.out.println("\n==== Cadastrar Categoria ====");
     
         System.out.print("Nome da Categoria: ");
@@ -453,7 +453,7 @@ public class App {
         System.out.println("Categoria cadastrada com sucesso!");
     }
     
-    public static void listarCategoria() {
+    private static void listarCategoria() {
         System.out.println("\n==== Lista de Categorias ====");
         List<Categoria> categorias = CateServi.listar();
     
@@ -469,7 +469,7 @@ public class App {
     }
     
     
-    public static void removerCategoria() {
+    private static void removerCategoria() {
         System.out.println("\n==== Remover Categoria ====");
         System.out.print("Informe o ID da categoria a ser removida: ");
         int id = teclado.nextInt();
@@ -490,7 +490,7 @@ public class App {
         
     }
     
-    public static void alteraCategoria() {
+    private static void alteraCategoria() {
         System.out.println("\n==== Alterar Categoria ====");
         System.out.print("Informe o ID da categoria a ser alterada: ");
         int id = teclado.nextInt();
@@ -550,7 +550,7 @@ public class App {
         }while(opcao != 5);
     }
 
-    public static void cadastraDocumento() {
+    private static void cadastraDocumento() {
         System.out.println("\n==== Cadastrar Documento ====");
         
         System.out.print("Informe o Nome do Documento: ");
@@ -569,7 +569,7 @@ public class App {
         System.out.println("Documento cadastrado com sucesso!");
     }
 
-    public static void listarDocumento() {
+    private static void listarDocumento() {
         System.out.println("\n==== Lista de Documentos ====");
         List<Documento> documentos = DocuServi.listar();
     
@@ -585,7 +585,7 @@ public class App {
         }
     }
     
-    public static void removeDocumento() {
+    private static void removeDocumento() {
         System.out.println("\n==== Remover Documento ====");
         System.out.print("Informe o ID do Documento a ser removido: ");
         int id = teclado.nextInt();
@@ -606,7 +606,7 @@ public class App {
 
     }
 
-    public static void alteraDocumento() {
+    private static void alteraDocumento() {
         System.out.println("\n==== Alterar Documento ====");
         System.out.print("Informe o ID do Documento a ser alterado: ");
         int id = teclado.nextInt();
@@ -668,7 +668,7 @@ public class App {
         }while(opcao != 5);
     }
 
-    public static void cadastraFornecedor() {
+    private static void cadastraFornecedor() {
         System.out.println("\n==== Cadastrar Fornecedor ====");
     
         System.out.print("Nome do Fornecedor: ");
@@ -690,7 +690,7 @@ public class App {
         System.out.println("Fornecedor cadastrado com sucesso!");
     }
     
-    public static void listarFornecedor() {
+    private static void listarFornecedor() {
         System.out.println("\n==== Lista de Fornecedores ====");
         List<Fornecedor> fornecedores = FornServi.listar();
     
@@ -706,7 +706,7 @@ public class App {
         }
     }
 
-    public static void removerFornecedor() {
+    private static void removerFornecedor() {
         System.out.println("\n==== Remover Fornecedor ====");
         System.out.print("Informe o CNPJ do fornecedor a ser removido: ");
         String cnpj = teclado.nextLine();
@@ -726,7 +726,7 @@ public class App {
         
     }
 
-    public static void alteraFornecedor() {
+    private static void alteraFornecedor() {
         System.out.println("\n==== Alterar Fornecedor ====");
         System.out.print("Informe o CNPJ do fornecedor a ser alterado: ");
         String cnpj = teclado.nextLine();
@@ -787,7 +787,7 @@ public class App {
         } while(opcao != 5);
     }
 
-    public static void cadastraUsuario() {
+    private static void cadastraUsuario() {
         System.out.println("==== Cadastrar Usuário ====");
         System.out.print("Insira o seu CPF: ");
         String CPF = teclado.nextLine();
@@ -811,7 +811,7 @@ public class App {
         System.out.println("Usuário cadastrado com sucesso!");
     }
     
-    public static void listarUsuario() {
+    private static void listarUsuario() {
         System.out.println("\n==== Lista de Usuários ====");
         List<Usuario> usuarios = UsuServi.listar();
     
@@ -830,7 +830,7 @@ public class App {
     }
     
     
-    public static void removerUsuario() {
+    private static void removerUsuario() {
         System.out.println("\n==== Remover Usuário ====");
         System.out.print("Informe o código do usuário a ser removido: ");
         int codigo = teclado.nextInt();
@@ -850,7 +850,7 @@ public class App {
         
     }
     
-    public static void alteraUsuario() {
+    private static void alteraUsuario() {
         System.out.println("\n==== Alterar Usuário ====");
         System.out.print("Informe o código do usuário a ser alterado: ");
         int codigo = teclado.nextInt();
