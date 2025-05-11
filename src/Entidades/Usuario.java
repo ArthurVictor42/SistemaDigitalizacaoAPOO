@@ -6,7 +6,7 @@ public class Usuario {
     private String SenhaUsuario;
     private String cpf;
     private int id;
-    private static int contID = 0;
+    private static int contID = 1;
 
     public Usuario(String nomeUsuario, String emailUsuario, String senhaUsuario, String cpf){
         this.NomeUsuario = nomeUsuario;
