@@ -162,7 +162,8 @@ public class App {
             System.out.println("2 - Listar Clientes");
             System.out.println("3 - Remover Cliente");
             System.out.println("4 - Altera Cliente");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Buscar Cliente");
+            System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
             opcao = teclado.nextInt();
     
@@ -180,13 +181,16 @@ public class App {
                     alteraClienteFisico();
                     break;
                 case 5:
+                    buscarClienteFisico();
+                    break;
+                case 6:
                     System.out.println("Saindo do Menu");
                     break;
                 default:
                     System.out.println("Opção Invalida!");
 
             }
-        } while(opcao != 5);
+        } while(opcao != 6);
     }
 
     // CRUD completo de Cliente Fisico!
@@ -277,6 +281,24 @@ public class App {
         }
     }
 
+    private static void buscarClienteFisico(){
+        System.out.println("======= Buscar Cliente Fisico =======");
+        System.out.print("Digite o codigo do cliente: ");
+        int codigo = teclado.nextInt();
+
+        ClienteFisico clientebuscar = ClienteFisiServi.buscarPorCodigo(codigo);
+        
+        if(clientebuscar != null){
+            System.out.println("Nome: " + clientebuscar.getNomeCliente());
+            System.out.println("CPF: " + clientebuscar.getCPF());
+            System.out.println("Codigo: " + clientebuscar.getCodigoCliente());
+        } else {
+            System.out.println("Cliente não encontrado!");
+        }
+    
+    }
+
+
     public static void menuClienteJuridico(){
         int opcao = 0;
 
@@ -286,7 +308,8 @@ public class App {
             System.out.println("2 - Listar Clientes");
             System.out.println("3 - Remover Cliente");
             System.out.println("4 - Altera Cliente");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Buscar Cliente");
+            System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
             opcao = teclado.nextInt();
 
@@ -304,13 +327,16 @@ public class App {
                     alteraClienteJuridico();
                     break;
                 case 5:
+                    buscarClienteJuridico();
+                    break;
+                case 6:
                     System.out.println("Saindo do menu de Cliente!");
                     break;
                 default:
                     System.out.println("Opção Invalida!");
                     break;
             }
-        } while(opcao != 5);
+        } while(opcao != 6);
     }
 
     // CRUD de Cliente Juridico
@@ -349,7 +375,7 @@ public class App {
             for (ClienteJuridico c : clientes) {
                 System.out.println("Código: " + c.getCodigoCliente());
                 System.out.println("Nome: " + c.getNomeCliente());
-                System.out.println("CPF: " + c.getCPF());
+                System.out.println("CPF: " + c.getCNPJ());
                 System.out.println("---------------------------");
             }
         }
@@ -388,7 +414,7 @@ public class App {
         if (cliente != null) {
             System.out.print("Novo nome (" + cliente.getNomeCliente() + "): ");
             String novoNome = teclado.nextLine();
-            System.out.print("Novo CPF (" + cliente.getCPF() + "): ");
+            System.out.print("Novo CPF (" + cliente.getCNPJ() + "): ");
             String novoCNPJ = teclado.nextLine();
     
             cliente.setNomeCliente(novoNome);
@@ -401,6 +427,23 @@ public class App {
         }
     }
 
+    private static void buscarClienteJuridico(){
+        System.out.println("======= Buscar Cliente Juridico =======");
+        System.out.print("Digite o codigo do cliente: ");
+        int codigo = teclado.nextInt();
+
+        ClienteJuridico clientebuscar = ClienteJuriServi.buscarPorCodigo(codigo);
+        
+        if(clientebuscar != null){
+            System.out.println("Nome: " + clientebuscar.getNomeCliente());
+            System.out.println("CPF: " + clientebuscar.getCNPJ());
+            System.out.println("Codigo: " + clientebuscar.getCodigoCliente());
+        } else {
+            System.out.println("Cliente não encontrado!");
+        }
+    
+    }
+
     public static void menuCategoria(){
         int opcao = 0;
 
@@ -410,7 +453,8 @@ public class App {
             System.out.println("2 - Listar Categoria");
             System.out.println("3 - Remover Categoria");
             System.out.println("4 - Altera Categoria");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Buscar Categoria");
+            System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
             opcao = teclado.nextInt();
 
@@ -428,13 +472,16 @@ public class App {
                     alteraCategoria();
                     break;
                 case 5:
+                    buscarCategoria();
+                    break;
+                case 6:
                     System.out.println("Saindo do menu de categorias! ");
                     break;
                 default:
                     System.out.println("Opção Invalida!");
                     break;
             }
-        }while(opcao != 5);
+        }while(opcao != 6);
     }
 
     private static void cadastraCategoria() {
@@ -514,6 +561,22 @@ public class App {
         }
     }
 
+    private static void buscarCategoria(){
+        System.out.println("======= Buscar Categoria =======");
+        System.out.print("Digite o codigo da categoria: ");
+        int codigo = teclado.nextInt();
+
+        Categoria categoriabuscar = CateServi.buscarPorId(codigo);
+        
+        if(categoriabuscar != null){
+            System.out.println("Nome da categoria: " + categoriabuscar.getNomeCategoria());
+            System.out.println("ID: " + categoriabuscar.getId());
+        } else {
+            System.out.println("Categoria não encontrado!");
+        }
+    
+    }
+
     public static void menuDocumento(){
         int opcao = 0;
 
@@ -523,7 +586,8 @@ public class App {
             System.out.println("2 - Listar Documento");
             System.out.println("3 - Remover Documento");
             System.out.println("4 - Altera Documento");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Buscar Documento");
+            System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
             opcao = teclado.nextInt();
 
@@ -541,13 +605,16 @@ public class App {
                     alteraDocumento();
                     break;
                 case 5:
+                    buscarDocumento();
+                    break;
+                case 6:
                     System.out.println("Saindo do menu de documentos!");
                     break;
                 default:
                     System.out.println("Opção Invalida!");
                     break;
             }
-        }while(opcao != 5);
+        }while(opcao != 6);
     }
 
     private static void cadastraDocumento() {
@@ -631,6 +698,23 @@ public class App {
             System.out.println("Documento não encontrado.");
         }
     }
+
+    private static void buscarDocumento(){
+        System.out.println("======= Buscar Documento =======");
+        System.out.print("Digite o codigo do documento: ");
+        int codigo = teclado.nextInt();
+
+        Documento documentobuscar = DocuServi.buscarPorId(codigo);
+        
+        if(documentobuscar != null){
+            System.out.println("Nome do documento: " + documentobuscar.getNomeDocumento());
+            System.out.println("Descrição do documento: " + documentobuscar.getDescricaoDocumento());
+            System.out.println("Codigo do documento: " + documentobuscar.getIdDocumento());
+        } else {
+            System.out.println("Documento não encontrado!");
+        }
+    
+    }
     
     public static void menuFornecedor(){
         int opcao = 0;
@@ -641,7 +725,8 @@ public class App {
             System.out.println("2 - Listar Fornecedor");
             System.out.println("3 - Remover Fornecedor");
             System.out.println("4 - Altera Fornecedor");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Buscar Fornecedor");
+            System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
             opcao = teclado.nextInt();
 
@@ -659,6 +744,9 @@ public class App {
                     alteraFornecedor();
                     break;
                 case 5:
+                    buscarFornecedor();
+                    break;
+                case 6:
                     System.out.println("Saindo do menu fornecedores!");
                     break;
                 default:
@@ -751,6 +839,23 @@ public class App {
         }
     }
 
+    private static void buscarFornecedor(){
+        System.out.println("======= Buscar Fornecedor =======");
+        System.out.print("Digite o CNPJ do Fornecedor: ");
+        String cnpj = teclado.nextLine();
+
+        Fornecedor fornecedorbuscar = FornServi.buscarPorCNPJ(cnpj);
+        
+        if(fornecedorbuscar != null){
+            System.out.println("Nome do Fornecedor: " + fornecedorbuscar.getNomeFornecedor());
+            System.out.println("CNPJ: " + fornecedorbuscar.getCNPJ());
+            System.out.println("Endereço do Fornecedor: " + fornecedorbuscar.getEnderecoFornecedor());
+        } else {
+            System.out.println("Fornecedor não encontrado!");
+        }
+    
+    }
+
     public static void menuUsuario(){
         int opcao = 0;
 
@@ -778,13 +883,16 @@ public class App {
                     alteraUsuario();
                     break;
                 case 5:
+                    buscarUsuario();
+                    break;
+                case 6:
                     System.out.println("Saindo do menu de usuarios!");
                     break;
                 default:
                     System.out.println("Opção Invalida!");
                     break;
             }
-        } while(opcao != 5);
+        } while(opcao != 6);
     }
 
     private static void cadastraUsuario() {
@@ -880,5 +988,23 @@ public class App {
         } else {
             System.out.println("Usuário não encontrado.");
         }
+    }
+
+    private static void buscarUsuario(){
+        System.out.println("======= Buscar Usuario =======");
+        System.out.print("Digite o codigo do usuario: ");
+        int codigo = teclado.nextInt();
+
+        Usuario usuariobuscar = UsuServi.buscarPorId(codigo);
+        
+        if(usuariobuscar != null){
+            System.out.println("Nome do usuario: " + usuariobuscar.getNomeUsuario());
+            System.out.println("CPF: " + usuariobuscar.getCpf());
+            System.out.println("Codigo: " + usuariobuscar.getId());
+            System.out.println("Email: " + usuariobuscar.getEmailUsuario());
+        } else {
+            System.out.println("Cliente não encontrado!");
+        }
+    
     }
 }

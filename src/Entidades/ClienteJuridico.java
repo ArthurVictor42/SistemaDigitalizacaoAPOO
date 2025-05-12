@@ -12,7 +12,7 @@ public class ClienteJuridico extends Cliente {
         this.CNPJ = CNPJ;
     }
 
-    public String getCPF() {
+    public String getCNPJ() {
         return this.CNPJ;
     }
 
