@@ -90,7 +90,7 @@ public class App {
             System.out.println("Login feito com sucesso");
             MenuPrincipal();
         } else {
-            System.out.println("Login não encontrado, senha ou email errados");
+            System.out.println("Login não executado, senha ou email errados");
         }
 
     }
