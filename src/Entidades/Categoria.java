@@ -3,11 +3,10 @@ package Entidades;
 public class Categoria {
     private String nomeCategoria;
     private int id;
-    private static int contID = 1;
 
-    public Categoria(String nomeCategoria){
+    public Categoria(int id, String nomeCategoria){
         this.nomeCategoria = nomeCategoria;
-        this.id = contID++;
+        this.id = id;
     }  
 
     public void setNomeCategoria(String nomeCategoria) {

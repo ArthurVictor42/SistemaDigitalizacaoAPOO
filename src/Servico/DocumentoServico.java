@@ -24,8 +24,8 @@ public class DocumentoServico {
        return documentoRepositorio.listarDocumento();
     }
 
-    public boolean alteraDescricao(int idDocumento, String novaDescricao, String novoNome) {
-        return documentoRepositorio.alterarDocumento(idDocumento, novoNome,novaDescricao);
+    public boolean alteraDescricao(Documento documento) {
+        return documentoRepositorio.alterarDocumento(documento);
     }
 
     public Documento buscarPorId(int id){

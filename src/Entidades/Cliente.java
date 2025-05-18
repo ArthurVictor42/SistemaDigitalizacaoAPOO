@@ -4,9 +4,9 @@ public abstract class Cliente {
     private String NomeCliente; 
     private int CodigoCliente; 
 
-    public Cliente(String NomeCliente, int CodigoCliente){
+    public Cliente(int codigo, String NomeCliente){
         this.NomeCliente = NomeCliente;
-        this.CodigoCliente = CodigoCliente;
+        this.CodigoCliente = codigo;
     }
 
     public void setNomeCliente(String NomeCliente) {

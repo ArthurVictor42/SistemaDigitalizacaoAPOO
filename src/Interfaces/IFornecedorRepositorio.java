@@ -10,7 +10,7 @@ public interface IFornecedorRepositorio {
 
     ArrayList<Fornecedor> listarFornecedor();
 
-    boolean alteraFornecedor(String CNPJ, String nomeFornecedor, String enderecoFornecedor);
+    boolean alteraFornecedor(Fornecedor fornecedor);
 
     Fornecedor buscarPorCNPJ(String CNPJ);
 }

@@ -3,8 +3,8 @@ package Entidades;
 public class ClienteJuridico extends Cliente {
     private String CNPJ;
 
-    public ClienteJuridico(String nomeCliente, int CodigoCliente, String CNPJ){
-        super(nomeCliente, CodigoCliente);
+    public ClienteJuridico(int codigo, String nomeCliente, String CNPJ){
+        super(codigo, nomeCliente);
         this.CNPJ = CNPJ;
     }
 

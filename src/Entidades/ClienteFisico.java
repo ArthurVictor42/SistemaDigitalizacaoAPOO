@@ -3,8 +3,8 @@ package Entidades;
 public class ClienteFisico extends Cliente {
     private String CPF;
 
-    public ClienteFisico(String nomeCliente, int CodigoCliente, String CPF){
-        super(nomeCliente, CodigoCliente);
+    public ClienteFisico(int codigo, String nomeCliente, String CPF){
+        super(codigo, nomeCliente);
         this.CPF = CPF;
     }
 

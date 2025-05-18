@@ -24,8 +24,8 @@ public class FornecedorServico {
         return fornecedorRepositorio.listarFornecedor();
     }
 
-    public boolean alteraFornecedor(String nomeFornecedor, String CNPJ, String enderecoFornecedor) {
-        return fornecedorRepositorio.alteraFornecedor(nomeFornecedor, CNPJ, enderecoFornecedor );
+    public boolean alteraFornecedor(Fornecedor fornecedor) {
+        return fornecedorRepositorio.alteraFornecedor(fornecedor);
     }
 
     public Fornecedor buscarPorCNPJ(String CNPJ){

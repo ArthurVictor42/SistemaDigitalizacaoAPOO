@@ -10,7 +10,7 @@ public interface ICategoriaRepositorio {
 
     ArrayList<Categoria> listarCategoria();
 
-    boolean alteraCategoria(int id, String novoNome);
+    boolean alteraCategoria(Categoria categoria);
 
     Categoria buscarPorId(int id);
 

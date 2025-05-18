@@ -24,8 +24,8 @@ public class UsuarioServico {
         return usuarioRepositorio.listarUsuario();
     }
 
-    public boolean alteraUsuario(int id, String nome, String email, String novaSenha, String cpf) {
-        return usuarioRepositorio.alteraUsuario(id, nome, email, novaSenha, cpf);
+    public boolean alteraUsuario(Usuario usuario) {
+        return usuarioRepositorio.alteraUsuario(usuario);
     }
 
     public Usuario buscarPorId(int id){

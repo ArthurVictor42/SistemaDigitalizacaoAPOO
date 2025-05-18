@@ -4,12 +4,11 @@ public class Documento {
     private String nomeDocumento;
     private String descricaoDocumento;
     private int idDocumento;
-    private static int ContID = 1;
 
-    public Documento(String nomeDocumento, String descricao){
+    public Documento(int id, String nomeDocumento, String descricao){
         this.nomeDocumento = nomeDocumento;
         this.descricaoDocumento = descricao;
-        this.idDocumento = ContID++;
+        this.idDocumento = id;
     }
 
     public void setNomeDocumento(String nomeDocumento) {

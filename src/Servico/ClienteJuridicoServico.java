@@ -25,8 +25,8 @@ public class ClienteJuridicoServico {
         return clienteRepositorio.listarEmpresa();
     }
 
-    public boolean alteraCliente(int id, String nomeCliente, String novoCPF) {
-        return clienteRepositorio.alteraCliente(id, nomeCliente, novoCPF);
+    public boolean alteraCliente(ClienteJuridico cliente) {
+        return clienteRepositorio.alteraCliente(cliente);
     }
 
     public ClienteJuridico buscarPorCodigo(int codigo){

@@ -10,7 +10,7 @@ public interface IDocumentoRepositorio {
 
     ArrayList<Documento> listarDocumento();
 
-    boolean alterarDocumento(int id, String novaDescricao, String novoNome);
+    boolean alterarDocumento(Documento documento);
 
     Documento buscarPorId(int id);
 }

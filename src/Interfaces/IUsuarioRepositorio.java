@@ -10,7 +10,7 @@ public interface IUsuarioRepositorio {
 
     ArrayList<Usuario> listarUsuario();
 
-    boolean alteraUsuario(int id, String nome, String email, String novaSenha, String cpf);
+    boolean alteraUsuario(Usuario usuario);
 
     Usuario buscarPorId(int id);
 }

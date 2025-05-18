@@ -10,7 +10,7 @@ public interface IClienteFisicoRepositorio {
 
     ArrayList<ClienteFisico> listarEmpresa();
 
-    boolean alteraCliente(int codigo, String nomeCliente, String novoCPF);
+    boolean alteraCliente(ClienteFisico cliente);
 
     ClienteFisico buscarPorCodigo(int codigo);
 }

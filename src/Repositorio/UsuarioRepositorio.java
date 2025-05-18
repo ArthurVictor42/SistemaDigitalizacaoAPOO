@@ -3,52 +3,111 @@ package Repositorio;
 import Entidades.Usuario;
 import Interfaces.IUsuarioRepositorio;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 
-public class UsuarioRepositorio implements IUsuarioRepositorio {
-    private ArrayList<Usuario> listaUsuario;
+import Conexao.conexaoBD;
 
-    public UsuarioRepositorio(ArrayList<Usuario> usuarios) {
-        this.listaUsuario = usuarios;
-    }
+public class UsuarioRepositorio implements IUsuarioRepositorio {
 
     public void cadastrar(Usuario usuario) {
-        this.listaUsuario.add(usuario);
+        String sql = "INSERT INTO usuario (id_usuario, nome_usuario, email_usuario, senha_usuario, cpf_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, usuario.getId());
+            stmt.setString(2, usuario.getNomeUsuario());
+            stmt.setString(3, usuario.getEmailUsuario());
+            stmt.setString(4, usuario.getSenhaUsuario());
+            stmt.setString(5, usuario.getCpf());
+
+            stmt.executeUpdate();
+
+            System.out.println("Usuario cadastrado com sucesso!");
+        } catch (SQLException e) {
+            System.out.println("Erro ao cadastrar Usuario: " + e.getMessage());
+        }
     }
 
     public boolean remover(int codigo) {
-        for(Usuario usuarios: listaUsuario){
-            if(usuarios.getId() == codigo){
-                listaUsuario.remove(usuarios);
-                return true;
-            }
+        String sql = "DELETE FROM usuario WHERE id_usuario =?";
+
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, codigo);
+
+            System.out.println("Usuario removido com sucesso! ");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar Usuario: " + e.getMessage());
         }
 
         return false;
     }
 
     public ArrayList<Usuario> listarUsuario() {
-        return listaUsuario;
+        ArrayList<Usuario> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM usuario";
+
+        try (Connection conn = conexaoBD.conexao();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Usuario usuario = new Usuario(rs.getInt("id_usuario"),
+                        rs.getString("nome_usuario"),
+                        rs.getString("email_usuario"),
+                        rs.getString("senha_usuario"),
+                        rs.getString("cpf_usuario"));
+                lista.add(usuario);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar usuarios: " + e.getMessage());
+        }
+
+        return lista;
     }
 
-    public boolean alteraUsuario(int id, String nome, String email, String novaSenha, String cpf) {
-        for (Usuario usuario : listaUsuario) {
-            if (usuario.getId() == id) {
-                usuario.setNomeUsuario(nome);
-                usuario.setEmailUsuario(email);
-                usuario.setSenhaUsuario(novaSenha);
-                usuario.setCpf(cpf);
-                return true;
-            }
+    public boolean alteraUsuario(Usuario usuario) {
+        String sql = "UPDATE usuario SET nome_usuario =?, email_usuario =?, senha_usuario =?, cpf_usuario =? WHERE id_usuario =?";
+
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, usuario.getNomeUsuario());
+            stmt.setString(2, usuario.getEmailUsuario());
+            stmt.setString(3, usuario.getSenhaUsuario());
+            stmt.setString(4, usuario.getCpf());
+            stmt.setInt(5, usuario.getId());
+
+            stmt.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao altera Usuario: " + e.getMessage());
         }
+
         return false;
     }
 
     public Usuario buscarPorId(int id) {
-        for(Usuario usuarios: listaUsuario){
-            if(usuarios.getId() == id){
-                return usuarios;
+        String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Usuario usuario = new Usuario(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nome_usuario"),
+                        rs.getString("email_usuario"),
+                        rs.getString("senha_usuario"),
+                        rs.getString("cpf_usuario"));
+                return usuario;
             }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar usuário: " + e.getMessage());
         }
 
         return null;

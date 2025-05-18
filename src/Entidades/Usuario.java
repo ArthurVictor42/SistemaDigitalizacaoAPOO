@@ -6,14 +6,13 @@ public class Usuario {
     private String SenhaUsuario;
     private String cpf;
     private int id;
-    private static int contID = 1;
 
-    public Usuario(String nomeUsuario, String emailUsuario, String senhaUsuario, String cpf){
+    public Usuario(int id, String nomeUsuario, String emailUsuario, String senhaUsuario, String cpf){
         this.NomeUsuario = nomeUsuario;
         this.EmailUsuario = emailUsuario;
         this.SenhaUsuario = senhaUsuario;
         this.cpf = cpf;
-        this.id = contID++;
+        this.id = id;
     }
 
     public void setNomeUsuario(String novonomeUsuario) {

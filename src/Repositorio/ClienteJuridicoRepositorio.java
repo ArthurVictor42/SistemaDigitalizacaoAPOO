@@ -5,48 +5,102 @@ import Interfaces.IClienteJuridicoRepositorio;
 
 import java.util.ArrayList;
 
-public class ClienteJuridicoRepositorio implements IClienteJuridicoRepositorio {
-    private ArrayList<ClienteJuridico> listaClientes;
+import Conexao.conexaoBD;
 
-    public ClienteJuridicoRepositorio(ArrayList<ClienteJuridico> clientes) {
-        this.listaClientes = clientes;
-    }
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ClienteJuridicoRepositorio implements IClienteJuridicoRepositorio {
 
     public void cadastrar(ClienteJuridico cliente) {
-        listaClientes.add(cliente);
+        String sql = "INSERT INTO clientejuridico (cod_clienteJ, nome_clienteJ, cnpj) VALUES (?, ?, ?)";
+
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, cliente.getCodigoCliente());
+            stmt.setString(2, cliente.getNomeCliente());
+            stmt.setString(3, cliente.getCNPJ());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao cadastrar Cliente: " + e.getMessage());
+        }
     }
 
     public boolean remover(int codigo) {
-    for (ClienteJuridico cliente : listaClientes) {
-        if (cliente.getCodigoCliente() == codigo) {
-            listaClientes.remove(cliente);
-            return true; // Remoção bem-sucedida
-        }
-    }
-    return false; // Cliente não encontrado
-}
+        String sql = "DELETE FROM clientejuridico WHERE cod_cliente = ?";
 
-    public ArrayList<ClienteJuridico> listarEmpresa() {
-        return listaClientes;
-    }
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, codigo);
+            stmt.executeUpdate();
 
-    public boolean alteraCliente(int id, String nomeCliente, String novoCNPJ) {
-        for (ClienteJuridico cliente : listaClientes) {
-            if (cliente.getCodigoCliente() == id) {
-                cliente.setNomeCliente(nomeCliente);
-                cliente.setCNPJ(novoCNPJ);
-                return true;
-            }
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao excluir cliente: " + e.getMessage());
         }
+
         return false;
     }
 
-    public ClienteJuridico buscarPorCodigo(int codigo) { 
-    for (ClienteJuridico cliente : listaClientes) {
-        if (cliente.getCodigoCliente() == codigo) {
-            return cliente;
+    public ArrayList<ClienteJuridico> listarEmpresa() {
+        ArrayList<ClienteJuridico> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM clientejuridico";
+
+        try (Connection conn = conexaoBD.conexao();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                ClienteJuridico cliente = new ClienteJuridico(rs.getInt("cod_clienteJ"),
+                        rs.getString("nome_clienteJ"),
+                        rs.getString("cnpj"));
+                lista.add(cliente);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar Cliente: " + e.getMessage());
         }
+
+        return lista;
     }
-    return null; // Retorna null se não encontrar
-}
+
+    public boolean alteraCliente(ClienteJuridico cliente) {
+        String sql = "UPDATE clientejuridico SET nome_clienteJ =?, cnpj =? WHERE cod_clienteJ =?";
+
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cliente.getNomeCliente());
+            stmt.setString(2, cliente.getCNPJ());
+            stmt.setInt(3, cliente.getCodigoCliente());
+
+            stmt.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar Cliente: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+    public ClienteJuridico buscarPorCodigo(int codigo) {
+        String sql = "SELECT * FROM clientejuridico WHERE cod_clienteJ = ?";
+
+        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, codigo);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                ClienteJuridico cliente = new ClienteJuridico(
+                        rs.getInt("cod_clienteJ"),
+                        rs.getString("nome_clienteJ"),
+                        rs.getString("cnpj"));
+                return cliente;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar cliente jurídico: " + e.getMessage());
+        }
+
+        return null;
+    }
+
 }

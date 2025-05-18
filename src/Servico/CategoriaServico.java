@@ -24,8 +24,8 @@ public class CategoriaServico {
        return categoriaRepositorio.listarCategoria();
     }
 
-    public boolean alteraCategoria(int id, String novoNome) {
-        return categoriaRepositorio.alteraCategoria(id, novoNome);
+    public boolean alteraCategoria(Categoria categoria) {
+        return categoriaRepositorio.alteraCategoria(categoria);
     }
 
     public Categoria buscarPorId(int id){

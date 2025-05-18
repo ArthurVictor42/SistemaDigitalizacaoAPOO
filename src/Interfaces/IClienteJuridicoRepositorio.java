@@ -7,11 +7,11 @@ import Entidades.ClienteJuridico;
 public interface IClienteJuridicoRepositorio {
     void cadastrar(ClienteJuridico cliente);
 
-    boolean remover(int codigoe);
+    boolean remover(int codigo);
 
     ArrayList<ClienteJuridico> listarEmpresa();
 
-    boolean alteraCliente(int id, String nomeCliente, String novoCNPJ);
+    boolean alteraCliente(ClienteJuridico cliente);
 
     ClienteJuridico buscarPorCodigo(int codigo);
     
