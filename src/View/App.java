@@ -362,7 +362,7 @@ public class App {
             for (ClienteJuridico c : clientes) {
                 System.out.println("Código: " + c.getCodigoCliente());
                 System.out.println("Nome: " + c.getNomeCliente());
-                System.out.println("CPF: " + c.getCNPJ());
+                System.out.println("CNPJ: " + c.getCNPJ());
                 System.out.println("---------------------------");
             }
         }
@@ -398,7 +398,7 @@ public class App {
         if (cliente != null) {
             System.out.print("Novo nome: ");
             String novoNome = teclado.nextLine();
-            System.out.print("Novo CPF: ");
+            System.out.print("Novo CNPJ: ");
             String novoCNPJ = teclado.nextLine();
 
             ClienteJuridico clientes = new ClienteJuridico(codigo, novoNome, novoCNPJ);
@@ -809,11 +809,15 @@ public class App {
 
     private static void alterarFornecedor() {
         System.out.println("\n==== Alterar Fornecedor ====");
+
+        teclado.nextLine();
+
         System.out.print("Informe o CNPJ do fornecedor a ser alterado: ");
         String cnpj = teclado.nextLine();
 
         Fornecedor fornecedorExistente = FornServi.buscarPorCNPJ(cnpj);
         if (fornecedorExistente != null) {
+            
             System.out.print("Novo nome: ");
             String novoNome = teclado.nextLine();
 

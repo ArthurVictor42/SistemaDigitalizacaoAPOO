@@ -65,10 +65,10 @@ public class CategoriaRepositorio implements ICategoriaRepositorio {
     }
 
     public boolean alteraCategoria(Categoria categoria) {
-        String sql = "UPDATE categoria SET id_cate=?, nome_cate=? WHERE id_cate=?";
+        String sql = "UPDATE categoria SET nome_cate=? WHERE id_cate=?";
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, categoria.getId());
-            stmt.setString(2, categoria.getNomeCategoria());
+            stmt.setString(1, categoria.getNomeCategoria());
+            stmt.setInt(2, categoria.getId());
             stmt.executeUpdate();
 
             return true;
