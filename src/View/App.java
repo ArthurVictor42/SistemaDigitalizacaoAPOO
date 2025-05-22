@@ -10,22 +10,22 @@ import java.util.List;
 public class App {
     public static Scanner teclado = new Scanner(System.in);
 
-    public static UsuarioRepositorio Usurepo = new UsuarioRepositorio();
+    public static UsuarioRepositorioJBDC Usurepo = new UsuarioRepositorioJBDC();
     public static UsuarioServico UsuServi = new UsuarioServico(Usurepo);
 
-    public static CategoriaRepositorio CateRepo = new CategoriaRepositorio();
+    public static CategoriaRepositorioJDBC CateRepo = new CategoriaRepositorioJDBC();
     public static CategoriaServico CateServi = new CategoriaServico(CateRepo);
 
-    public static DocumentoRepositorio DocuRepo = new DocumentoRepositorio();
+    public static DocumentoRepositorioJDBC DocuRepo = new DocumentoRepositorioJDBC();
     public static DocumentoServico DocuServi = new DocumentoServico(DocuRepo);
 
-    public static ClienteFisicoRepositorio ClienteFisiRepo = new ClienteFisicoRepositorio();
+    public static ClienteFisicoRepositorioJDBC ClienteFisiRepo = new ClienteFisicoRepositorioJDBC();
     public static ClienteFisicoServico ClienteFisiServi = new ClienteFisicoServico(ClienteFisiRepo);
 
-    public static FornecedorRepositorio FornRepo = new FornecedorRepositorio();
+    public static FornecedorRepositorioJDBC FornRepo = new FornecedorRepositorioJDBC();
     public static FornecedorServico FornServi = new FornecedorServico(FornRepo);
 
-    public static ClienteJuridicoRepositorio ClienteJuriRepo = new ClienteJuridicoRepositorio();
+    public static ClienteJuridicoRepositorioJDBC ClienteJuriRepo = new ClienteJuridicoRepositorioJDBC();
     public static ClienteJuridicoServico ClienteJuriServi = new ClienteJuridicoServico(ClienteJuriRepo);
 
     public static void main(String[] args) {
@@ -621,9 +621,13 @@ public class App {
             return;
         }
 
-        Documento novoDoc = new Documento(codigo, nome, descricao);
-        DocuServi.cadastra(novoDoc);
-        System.out.println("Documento cadastrado com sucesso!");
+        try {
+            Documento novoDoc = new Documento(codigo, nome, descricao);
+            DocuServi.cadastra(novoDoc);
+        } catch (Exception e){
+            System.out.println("Erro ao cadastrar documento: " + e.getMessage());
+        }
+        
     }
 
     private static void listarDocumento() {
@@ -769,7 +773,7 @@ public class App {
         try {
             Fornecedor fornecedor = new Fornecedor(nome, cnpj, endereco);
             FornServi.cadastra(fornecedor);
-            System.out.println("Fornecedor cadastrado com sucesso!");
+
         } catch (Exception e) {
             System.out.println("Erro ao tentar cadastrar fornecedor.");
         }
@@ -817,7 +821,7 @@ public class App {
 
         Fornecedor fornecedorExistente = FornServi.buscarPorCNPJ(cnpj);
         if (fornecedorExistente != null) {
-            
+
             System.out.print("Novo nome: ");
             String novoNome = teclado.nextLine();
 

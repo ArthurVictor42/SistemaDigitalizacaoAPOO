@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import Conexao.conexaoBD;
 
-public class CategoriaRepositorio implements ICategoriaRepositorio {
+public class CategoriaRepositorioJDBC implements ICategoriaRepositorio {
 
     public void cadastrar(Categoria categoria) {
 
@@ -22,6 +22,8 @@ public class CategoriaRepositorio implements ICategoriaRepositorio {
             stmt.setString(2, categoria.getNomeCategoria());
 
             stmt.executeUpdate();
+
+            System.out.println("Categoria cadastrada com sucesso");
         } catch (SQLException e) {
             System.out.println("Erro ao cadastrar Categoria: " + e.getMessage());
         }

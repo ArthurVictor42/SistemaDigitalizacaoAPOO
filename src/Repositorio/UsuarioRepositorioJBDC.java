@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import Conexao.conexaoBD;
 
-public class UsuarioRepositorio implements IUsuarioRepositorio {
+public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
 
     public void cadastrar(Usuario usuario) {
         String sql = "INSERT INTO usuario (id_usuario, nome_usuario, email_usuario, senha_usuario, cpf_usuario) VALUES (?, ?, ?, ?, ?, ?)";

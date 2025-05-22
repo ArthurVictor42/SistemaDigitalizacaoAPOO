@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import Conexao.conexaoBD;
 
-public class DocumentoRepositorio implements IDocumentoRepositorio {
+public class DocumentoRepositorioJDBC implements IDocumentoRepositorio {
 
     public void cadastrar(Documento documento) {
         String sql = "INSERT INTO documento (cod_documento, nome_documento, descricao ) VALUES (?, ?, ?)";
@@ -23,7 +23,8 @@ public class DocumentoRepositorio implements IDocumentoRepositorio {
             stmt.setString(3, documento.getDescricaoDocumento());
 
             stmt.executeUpdate();
-
+            
+            System.out.println("Documento cadastrado com sucesso!");
         } catch (SQLException e) {
             System.out.println("Erro ao adicionar documento: " + e.getMessage());
         }

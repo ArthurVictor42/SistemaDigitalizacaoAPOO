@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import Conexao.conexaoBD;
 
-public class FornecedorRepositorio implements IFornecedorRepositorio {
+public class FornecedorRepositorioJDBC implements IFornecedorRepositorio {
 
     public void cadastrar(Fornecedor fornecedor) {
         String sql = "INSERT INTO fornecedor (cnpj, nome_fornecedor, endereco_fornecedor) VALUES (?, ?, ?)";
@@ -23,6 +23,7 @@ public class FornecedorRepositorio implements IFornecedorRepositorio {
             stmt.setString(3, fornecedor.getEnderecoFornecedor());
 
             stmt.executeUpdate();
+            System.out.println("Fornecedor cadastrado com sucesso!");
         } catch (SQLException e) {
             System.out.println("Erro ao cadastrar Fornecedor: " + e.getMessage());
         }
