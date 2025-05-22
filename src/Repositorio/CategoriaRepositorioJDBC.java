@@ -36,7 +36,6 @@ public class CategoriaRepositorioJDBC implements ICategoriaRepositorio {
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-            System.out.println("Categoria removida com sucesso!");
             return true;
         } catch (SQLException e) {
             System.out.println("Erro ao remove categoria: " + e.getMessage());

@@ -38,7 +38,6 @@ public class DocumentoRepositorioJDBC implements IDocumentoRepositorio {
 
             stmt.executeUpdate();
 
-            System.out.println("Documento removido com sucesso!");
 
             return true;
         } catch (SQLException e) {

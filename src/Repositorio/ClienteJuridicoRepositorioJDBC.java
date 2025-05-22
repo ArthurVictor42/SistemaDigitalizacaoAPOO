@@ -31,7 +31,7 @@ public class ClienteJuridicoRepositorioJDBC implements IClienteJuridicoRepositor
     }
 
     public boolean remover(int codigo) {
-        String sql = "DELETE FROM clientejuridico WHERE cod_cliente = ?";
+        String sql = "DELETE FROM clientejuridico WHERE cod_clienteJ = ?";
 
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, codigo);

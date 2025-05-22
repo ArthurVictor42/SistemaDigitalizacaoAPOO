@@ -35,7 +35,7 @@ public class FornecedorRepositorioJDBC implements IFornecedorRepositorio {
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, CNPJ);
 
-            System.out.println("Fornecedor removido com sucesso!");
+            
             stmt.executeUpdate();
 
             return true;

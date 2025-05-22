@@ -230,7 +230,7 @@ public class App {
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Você deseja remove esse cliente? (S/N)");
+        System.out.print("Você deseja remove esse cliente? (S/N): ");
         String resposta = teclado.nextLine();
 
         if (resposta.equals("S")) {
@@ -374,7 +374,7 @@ public class App {
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Você deseja remove esse cliente? (S/N)");
+        System.out.print("Você deseja remove esse cliente? (S/N): ");
         String escolha = teclado.nextLine();
 
         if (escolha.equals("S")) {
@@ -510,7 +510,7 @@ public class App {
         int id = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.println("Você Deseja remover essa categoria? (S/N)");
+        System.out.print("Você Deseja remover essa categoria? (S/N): ");
         String escolha = teclado.nextLine();
 
         if (escolha.equals("S")) {
@@ -652,7 +652,7 @@ public class App {
         int id = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Você deseja remove esse documento? (S/N)");
+        System.out.print("Você deseja remove esse documento? (S/N): ");
         String escolha = teclado.nextLine();
 
         if (escolha.equals("S")) {
@@ -797,6 +797,9 @@ public class App {
 
     private static void removerFornecedor() {
         System.out.println("\n==== Remover Fornecedor ====");
+
+        teclado.nextLine();
+
         System.out.print("Informe o CNPJ do fornecedor a ser removido: ");
         String cnpj = teclado.nextLine();
 
@@ -843,6 +846,9 @@ public class App {
 
     private static void buscarFornecedor() {
         System.out.println("\n==== Buscar Fornecedor ====");
+
+        teclado.nextLine();
+
         System.out.print("Digite o CNPJ do fornecedor: ");
         String cnpj = teclado.nextLine();
 
@@ -954,7 +960,7 @@ public class App {
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Deseja realmente remove esse usuario? (S/N)");
+        System.out.print("Deseja realmente remove esse usuario? (S/N): ");
         String escolha = teclado.nextLine();
         if (escolha.equals("S")) {
             boolean sucesso = UsuServi.excluir(codigo);

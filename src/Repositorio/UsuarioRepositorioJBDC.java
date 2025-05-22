@@ -15,7 +15,7 @@ import Conexao.conexaoBD;
 public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
 
     public void cadastrar(Usuario usuario) {
-        String sql = "INSERT INTO usuario (id_usuario, nome_usuario, email_usuario, senha_usuario, cpf_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (id_usuario, nome_usuario, email_usuario, senha_usuario, cpf_usuario) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, usuario.getId());
@@ -38,7 +38,8 @@ public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, codigo);
 
-            System.out.println("Usuario removido com sucesso! ");
+            stmt.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             System.out.println("Erro ao deletar Usuario: " + e.getMessage());
