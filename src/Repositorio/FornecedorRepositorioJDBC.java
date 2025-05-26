@@ -35,7 +35,6 @@ public class FornecedorRepositorioJDBC implements IFornecedorRepositorio {
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, CNPJ);
 
-            
             stmt.executeUpdate();
 
             return true;
@@ -88,22 +87,20 @@ public class FornecedorRepositorioJDBC implements IFornecedorRepositorio {
 
     public Fornecedor buscarPorCNPJ(String cnpj) {
         String sql = "SELECT * FROM fornecedor WHERE cnpj = ?";
-
-        try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conexaoBD.conexao();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cnpj);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Fornecedor fornecedor = new Fornecedor(
+                return new Fornecedor(
                         rs.getString("cnpj"),
                         rs.getString("nome_fornecedor"),
                         rs.getString("endereco_fornecedor"));
-                return fornecedor;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao buscar fornecedor: " + e.getMessage());
         }
-
         return null;
     }
 }

@@ -5,6 +5,11 @@ import Repositorio.*;
 import Servico.*;
 
 import java.util.Scanner;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class App {
@@ -606,7 +611,7 @@ public class App {
     private static void cadastraDocumento() {
         System.out.println("\n==== Cadastrar Documento ====");
 
-        System.out.print("Informe o codigo do Documento: ");
+        System.out.print("Informe o código do Documento: ");
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
@@ -617,17 +622,71 @@ public class App {
         String descricao = teclado.nextLine();
 
         if (nome.trim().isEmpty() || descricao.trim().isEmpty()) {
-            System.out.println("Por favor, Preencha todas as informações corretamente");
+            System.out.println("Por favor, preencha todas as informações corretamente.");
             return;
         }
 
-        try {
-            Documento novoDoc = new Documento(codigo, nome, descricao);
-            DocuServi.cadastra(novoDoc);
-        } catch (Exception e){
-            System.out.println("Erro ao cadastrar documento: " + e.getMessage());
+        System.out.print("Informe o ID da Categoria: ");
+        int idCategoria = teclado.nextInt();
+        teclado.nextLine();
+        Categoria categoria = CateServi.buscarPorId(idCategoria);
+
+        System.out.print("Digite 1 para Cliente Físico ou 2 para Jurídico: ");
+        int tipoCliente = teclado.nextInt();
+        teclado.nextLine();
+
+        ClienteFisico clienteFisico = null;
+        ClienteJuridico clienteJuridico = null;
+
+        if (tipoCliente == 1) {
+            System.out.print("Digite o código do Cliente Físico: ");
+            int idClienteFisico = teclado.nextInt();
+            teclado.nextLine();
+            clienteFisico = ClienteFisiServi.buscarPorCodigo(idClienteFisico);
+        } else if (tipoCliente == 2) {
+            System.out.print("Digite o código do Cliente Jurídico: ");
+            int idClienteJuridico = teclado.nextInt();
+            teclado.nextLine();
+            clienteJuridico = ClienteJuriServi.buscarPorCodigo(idClienteJuridico);
         }
-        
+
+        System.out.print("Digite o CNPJ do Fornecedor: ");
+        String cnpj = teclado.nextLine();
+        Fornecedor fornecedor = FornServi.buscarPorCNPJ(cnpj);
+
+        if (categoria == null || fornecedor == null ||
+                (clienteFisico == null && clienteJuridico == null)) {
+            System.out.println("Erro: Categoria, fornecedor ou cliente inválido.");
+            return;
+        }
+
+        Documento novoDoc = new Documento(codigo, nome, descricao, clienteFisico, clienteJuridico, categoria,
+                fornecedor);
+
+        System.out.print("Digite o caminho completo do arquivo a ser enviado: ");
+        String caminhoOrigem = teclado.nextLine();
+
+        Path origem = Paths.get(caminhoOrigem);
+        if (!Files.exists(origem)) {
+            System.out.println("Arquivo não encontrado no caminho informado.");
+            return;
+        }
+
+        String nomeArquivo = nome + "_" + origem.getFileName();
+        Path destino = Paths.get("ProjetoSistemaDigitalizacao\\documentos\\" + nomeArquivo);
+
+        try {
+            Files.createDirectories(destino.getParent());
+            Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
+            novoDoc.setCaminhoArquivo(destino.toString());
+            System.out.println("Arquivo enviado com sucesso.");
+        } catch (IOException e) {
+            System.out.println("Erro ao copiar o arquivo:");
+            e.printStackTrace();
+            return;
+        }
+
+        DocuServi.cadastra(novoDoc);
     }
 
     private static void listarDocumento() {
@@ -641,6 +700,24 @@ public class App {
                 System.out.println("ID: " + documento.getIdDocumento());
                 System.out.println("Nome: " + documento.getNomeDocumento());
                 System.out.println("Descrição: " + documento.getDescricaoDocumento());
+
+                // Nome da categoria
+                if (documento.getCategoria() != null) {
+                    System.out.println("Categoria: " + documento.getCategoria().getNomeCategoria());
+                }
+
+                // Nome do cliente (pode ser físico ou jurídico)
+                if (documento.getClientefisico() != null) {
+                    System.out.println("Cliente Físico: " + documento.getClientefisico().getNomeCliente());
+                } else if (documento.getClientejuridico() != null) {
+                    System.out.println("Cliente Jurídico: " + documento.getClientejuridico().getNomeCliente());
+                }
+
+                // Nome do fornecedor
+                if (documento.getFornecedor() != null) {
+                    System.out.println("Fornecedor: " + documento.getFornecedor().getNomeFornecedor());
+                }
+
                 System.out.println("---------------------------");
             }
         }
@@ -652,19 +729,24 @@ public class App {
         int id = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Você deseja remove esse documento? (S/N): ");
+        Documento doc = DocuServi.buscarPorId(id);
+        if (doc == null) {
+            System.out.println("Documento não encontrado.");
+            return;
+        }
+
+        System.out.print("Você deseja remover esse documento? (S/N): ");
         String escolha = teclado.nextLine();
 
-        if (escolha.equals("S")) {
+        if (escolha.equalsIgnoreCase("S")) {
             if (DocuServi.excluir(id)) {
                 System.out.println("Documento removido com sucesso.");
             } else {
-                System.out.println("Documento não encontrado.");
+                System.out.println("Erro ao remover documento.");
             }
         } else {
-            System.out.println("Confirmação Recusada");
+            System.out.println("Operação cancelada.");
         }
-
     }
 
     private static void alteraDocumento() {
@@ -686,8 +768,44 @@ public class App {
                 return;
             }
 
-            Documento documentos = new Documento(id, novoNome, novaDescricao);
-            DocuServi.alteraDescricao(documentos);
+            System.out.print("Informe o ID da Categoria: ");
+            int idCategoria = teclado.nextInt();
+            teclado.nextLine();
+            Categoria categoria = CateServi.buscarPorId(idCategoria);
+
+            System.out.print("Digite 1 para Cliente Físico ou 2 para Jurídico: ");
+            int tipoCliente = teclado.nextInt();
+            teclado.nextLine();
+
+            ClienteFisico clienteFisico = null;
+            ClienteJuridico clienteJuridico = null;
+
+            if (tipoCliente == 1) {
+                System.out.print("Digite o código do Cliente Físico: ");
+                int idClienteFisico = teclado.nextInt();
+                teclado.nextLine();
+                clienteFisico = ClienteFisiServi.buscarPorCodigo(idClienteFisico);
+            } else if (tipoCliente == 2) {
+                System.out.print("Digite o código do Cliente Jurídico: ");
+                int idClienteJuridico = teclado.nextInt();
+                teclado.nextLine();
+                clienteJuridico = ClienteJuriServi.buscarPorCodigo(idClienteJuridico);
+            }
+
+            System.out.print("Digite o CNPJ do Fornecedor: ");
+            String cnpj = teclado.nextLine();
+            Fornecedor fornecedor = FornServi.buscarPorCNPJ(cnpj);
+
+            // Validação básica
+            if (categoria == null || fornecedor == null ||
+                    (clienteFisico == null && clienteJuridico == null)) {
+                System.out.println("Erro: Categoria, fornecedor ou cliente inválido.");
+                return;
+            }
+
+            Documento documentos = new Documento(id, novoNome, novaDescricao, clienteFisico, clienteJuridico, categoria,
+                    fornecedor);
+            DocuServi.alteraDocumento(documentos);
             System.out.println("Documento atualizado com sucesso.");
         } else {
             System.out.println("Documento não encontrado.");
@@ -696,19 +814,54 @@ public class App {
 
     private static void buscarDocumento() {
         System.out.println("======= Buscar Documento =======");
-        System.out.print("Digite o codigo do documento: ");
+        System.out.print("Digite o código do documento: ");
         int codigo = teclado.nextInt();
+        teclado.nextLine();
 
-        Documento documentobuscar = DocuServi.buscarPorId(codigo);
+        Documento doc = DocuServi.buscarPorId(codigo);
 
-        if (documentobuscar != null) {
-            System.out.println("Nome do documento: " + documentobuscar.getNomeDocumento());
-            System.out.println("Descrição do documento: " + documentobuscar.getDescricaoDocumento());
-            System.out.println("Codigo do documento: " + documentobuscar.getIdDocumento());
+        if (doc != null) {
+            System.out.println("========= Informações do documento =========");
+            System.out.println("ID: " + doc.getIdDocumento());
+            System.out.println("Nome: " + doc.getNomeDocumento());
+            System.out.println("Descrição: " + doc.getDescricaoDocumento());
+            System.out.println(
+                    "Categoria: " + (doc.getCategoria() != null ? doc.getCategoria().getNomeCategoria() : "N/A"));
+            System.out.println("Cliente: " +
+                    (doc.getClientefisico() != null ? doc.getClientefisico().getNomeCliente()
+                            : doc.getClientejuridico() != null ? doc.getClientejuridico().getNomeCliente() : "N/A"));
+            System.out.println(
+                    "Fornecedor: " + (doc.getFornecedor() != null ? doc.getFornecedor().getNomeFornecedor() : "N/A"));
+            System.out.println("---------------------------------------------");
+
+            System.out.print("Deseja fazer download do arquivo? (S/N): ");
+            String opcao = teclado.nextLine();
+
+            if (opcao.equalsIgnoreCase("S")) {
+
+                String caminhoArquivo = doc.getCaminhoArquivo();
+
+                if (caminhoArquivo == null || caminhoArquivo.isBlank()) {
+                    System.out.println("Erro: O caminho do arquivo não está salvo no documento.");
+                    return;
+                }
+                System.out.print("Digite o caminho de destino (Ex.: C:\\Users\\SeuUsuario\\Downloads): ");
+                String destinoStr = teclado.nextLine();
+
+                Path origem = Paths.get(doc.getCaminhoArquivo());
+                Path destino = Paths.get(destinoStr, origem.getFileName().toString());
+
+                try {
+                    Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Arquivo baixado com sucesso.");
+                } catch (IOException e) {
+                    System.out.println("Erro ao baixar o arquivo: " + e.getMessage());
+                }
+            }
+
         } else {
-            System.out.println("Documento não encontrado!");
+            System.out.println("Documento não encontrado.");
         }
-
     }
 
     public static void menuFornecedor() {
@@ -756,11 +909,11 @@ public class App {
 
         teclado.nextLine(); // Quebra de linha
 
-        System.out.print("Nome do Fornecedor: ");
-        String nome = teclado.nextLine();
-
         System.out.print("CNPJ do Fornecedor: ");
         String cnpj = teclado.nextLine();
+
+        System.out.print("Nome do Fornecedor: ");
+        String nome = teclado.nextLine();
 
         System.out.print("Endereço do Fornecedor: ");
         String endereco = teclado.nextLine();
@@ -771,7 +924,7 @@ public class App {
         }
 
         try {
-            Fornecedor fornecedor = new Fornecedor(nome, cnpj, endereco);
+            Fornecedor fornecedor = new Fornecedor(cnpj, nome, endereco);
             FornServi.cadastra(fornecedor);
 
         } catch (Exception e) {
@@ -790,6 +943,7 @@ public class App {
                 System.out.println("Nome: " + f.getNomeFornecedor());
                 System.out.println("CNPJ: " + f.getCNPJ());
                 System.out.println("Endereço: " + f.getEnderecoFornecedor());
+
                 System.out.println("---------------------------");
             }
         }
@@ -836,7 +990,7 @@ public class App {
                 return;
             }
 
-            Fornecedor atualizado = new Fornecedor(novoNome, cnpj, novoEndereco);
+            Fornecedor atualizado = new Fornecedor(cnpj, novoNome, novoEndereco);
             FornServi.alteraFornecedor(atualizado);
             System.out.println("Fornecedor atualizado com sucesso.");
         } else {

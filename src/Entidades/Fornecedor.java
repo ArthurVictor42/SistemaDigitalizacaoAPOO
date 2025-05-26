@@ -5,9 +5,9 @@ public class Fornecedor {
     private String CNPJ;
     private String enderecoFornecedor;
 
-    public Fornecedor(String nomeFornecedor, String CNPJ, String enderecoFornecedor){
-        this.nomeFornecedor = nomeFornecedor;
+    public Fornecedor(String CNPJ, String nomeFornecedor,String enderecoFornecedor){
         this.CNPJ = CNPJ;
+        this.nomeFornecedor = nomeFornecedor;
         this.enderecoFornecedor = enderecoFornecedor;
     }
 
