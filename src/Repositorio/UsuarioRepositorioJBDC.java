@@ -15,7 +15,7 @@ import Conexao.conexaoBD;
 public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
 
     public void cadastrar(Usuario usuario) {
-        String sql = "INSERT INTO usuario (id_usuario, nome_usuario, email_usuario, senha_usuario, cpf_usuario) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (id_usuario, nome_usuario, email_usuario, senha_usuario, cpf_usuario, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, usuario.getId());
@@ -23,6 +23,7 @@ public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
             stmt.setString(3, usuario.getEmailUsuario());
             stmt.setString(4, usuario.getSenhaUsuario());
             stmt.setString(5, usuario.getCpf());
+            stmt.setString(6, usuario.getTipoUsuario());
 
             stmt.executeUpdate();
 
@@ -61,7 +62,8 @@ public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
                         rs.getString("nome_usuario"),
                         rs.getString("email_usuario"),
                         rs.getString("senha_usuario"),
-                        rs.getString("cpf_usuario"));
+                        rs.getString("cpf_usuario"),
+                        rs.getString("tipo_usuario"));
                 lista.add(usuario);
             }
         } catch (SQLException e) {
@@ -72,14 +74,15 @@ public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
     }
 
     public boolean alteraUsuario(Usuario usuario) {
-        String sql = "UPDATE usuario SET nome_usuario =?, email_usuario =?, senha_usuario =?, cpf_usuario =? WHERE id_usuario =?";
+        String sql = "UPDATE usuario SET nome_usuario =?, email_usuario =?, senha_usuario =?, cpf_usuario =?, tipo_usuario =? WHERE id_usuario =?";
 
         try (Connection conn = conexaoBD.conexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, usuario.getNomeUsuario());
             stmt.setString(2, usuario.getEmailUsuario());
             stmt.setString(3, usuario.getSenhaUsuario());
             stmt.setString(4, usuario.getCpf());
-            stmt.setInt(5, usuario.getId());
+            stmt.setString(5, usuario.getTipoUsuario());
+            stmt.setInt(6, usuario.getId());
 
             stmt.executeUpdate();
 
@@ -104,7 +107,8 @@ public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
                         rs.getString("nome_usuario"),
                         rs.getString("email_usuario"),
                         rs.getString("senha_usuario"),
-                        rs.getString("cpf_usuario"));
+                        rs.getString("cpf_usuario"),
+                        rs.getString("tipo_usuario"));
                 return usuario;
             }
         } catch (SQLException e) {

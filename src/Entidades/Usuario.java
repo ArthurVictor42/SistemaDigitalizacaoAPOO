@@ -6,13 +6,15 @@ public class Usuario {
     private String SenhaUsuario;
     private String cpf;
     private int id;
+    private String tipoUsuario;
 
-    public Usuario(int id, String nomeUsuario, String emailUsuario, String senhaUsuario, String cpf){
+    public Usuario(int id, String nomeUsuario, String emailUsuario, String senhaUsuario, String cpf, String tipoUsuario){
         this.NomeUsuario = nomeUsuario;
         this.EmailUsuario = emailUsuario;
         this.SenhaUsuario = senhaUsuario;
         this.cpf = cpf;
         this.id = id;
+        this.tipoUsuario = tipoUsuario;
     }
 
     public void setNomeUsuario(String novonomeUsuario) {
@@ -53,6 +55,14 @@ public class Usuario {
 
     public String getCpf() {
         return this.cpf;
+    }  
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
     }
 
     @Override

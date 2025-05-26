@@ -14,6 +14,7 @@ import java.util.List;
 
 public class App {
     public static Scanner teclado = new Scanner(System.in);
+    private static Usuario usuarioLogado = null;
 
     public static UsuarioRepositorioJBDC Usurepo = new UsuarioRepositorioJBDC();
     public static UsuarioServico UsuServi = new UsuarioServico(Usurepo);
@@ -38,7 +39,7 @@ public class App {
 
         // Verifica se o usuário é cadastrado
         while (opcao != 3) {
-            System.out.println("\n Você já é cadastrado?");
+            System.out.println("\nVocê já é cadastrado?");
             System.out.println("1 - Fazer Login");
             System.out.println("2 - Fazer Cadastro de Usuário");
             System.out.println("3 - Caso deseja encerra o Sistema");
@@ -76,30 +77,29 @@ public class App {
         System.out.print("Senha: ");
         String senha = teclado.nextLine();
 
-        boolean verificar = verificacaologin(email, senha);
+        usuarioLogado = verificacaologin(email, senha);
 
-        if (verificar) {
+        if (usuarioLogado != null) {
             System.out.println("Login feito com sucesso");
             MenuPrincipal();
         } else {
             System.out.println("Login não executado, senha ou email errados");
         }
-
     }
 
-    private static boolean verificacaologin(String email, String senha) {
+    private static Usuario verificacaologin(String email, String senha) {
         List<Usuario> usuarios = UsuServi.listar();
-
         for (Usuario usuario : usuarios) {
-            if (usuario.getEmailUsuario().equals(email) || usuario.getSenhaUsuario().equals(senha)) {
-                return true;
+            if (usuario.getEmailUsuario().equals(email) && usuario.getSenhaUsuario().equals(senha)) {
+                return usuario;
             }
         }
-        return false;
+        return null;
     }
 
     public static void MenuPrincipal() {
         int opcao = 0;
+        String tipo = usuarioLogado.getTipoUsuario();
 
         do {
             System.out.println("\n==== Menu Principal ====");
@@ -108,7 +108,9 @@ public class App {
             System.out.println("3 - Menu Categoria");
             System.out.println("4 - Menu Documento");
             System.out.println("5 - Menu Fornecedor");
-            System.out.println("6 - Menu Usuário");
+            if (tipo.equals("Funcionario") || tipo.equals("ADM")) {
+                System.out.println("6 - Menu Usuário");
+            }
             System.out.println("7 - Sair");
             System.out.print("Sua escolha: ");
             opcao = teclado.nextInt();
@@ -116,43 +118,47 @@ public class App {
 
             switch (opcao) {
                 case 1:
-                    menuClienteFisico();
+                    menuClienteFisico(tipo);
                     break;
                 case 2:
-                    menuClienteJuridico();
+                    menuClienteJuridico(tipo);
                     break;
                 case 3:
-                    menuCategoria();
+                    menuCategoria(tipo);
                     break;
                 case 4:
-                    menuDocumento();
+                    menuDocumento(tipo);
                     break;
                 case 5:
-                    menuFornecedor();
+                    menuFornecedor(tipo);
                     break;
                 case 6:
-                    menuUsuario();
+                    if (tipo.equals("Funcionario") || tipo.equals("ADM")) {
+                        menuUsuario(tipo);
+                    } else {
+                        System.out.println("Acesso negado!");
+                    }
                     break;
                 case 7:
                     System.out.println("Sistema Encerrado com sucesso!");
                     break;
                 default:
                     System.out.println("Opção inválida.");
-                    break;
             }
         } while (opcao != 7);
-
     }
 
-    public static void menuClienteFisico() {
+    public static void menuClienteFisico(String tipoUsuario) {
         int opcao = 0;
 
         do {
-            System.out.println("\n==== Menu Cliente Fisico ====");
-            System.out.println("1 - Cadastra Cliente");
-            System.out.println("2 - Listar Clientes");
-            System.out.println("3 - Remover Cliente");
-            System.out.println("4 - Altera Cliente");
+            System.out.println("\n==== Menu Cliente Físico ====");
+            System.out.println("1 - Cadastrar Cliente");
+            if (!tipoUsuario.equals("Cliente")) {
+                System.out.println("2 - Listar Clientes");
+                System.out.println("3 - Remover Cliente");
+                System.out.println("4 - Alterar Cliente");
+            }
             System.out.println("5 - Buscar Cliente");
             System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
@@ -163,13 +169,25 @@ public class App {
                     cadastraClienteFisico();
                     break;
                 case 2:
-                    listarClienteFisico();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        listarClienteFisico();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 3:
-                    removeClienteFisico();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        removeClienteFisico();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 4:
-                    alteraClienteFisico();
+                    if (!tipoUsuario.equals("CLIENTE")) {
+                        alteraClienteFisico();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 5:
                     buscarClienteFisico();
@@ -178,8 +196,7 @@ public class App {
                     System.out.println("Saindo do Menu");
                     break;
                 default:
-                    System.out.println("Opção Invalida!");
-
+                    System.out.println("Opção Inválida!");
             }
         } while (opcao != 6);
     }
@@ -287,15 +304,17 @@ public class App {
 
     }
 
-    public static void menuClienteJuridico() {
+    public static void menuClienteJuridico(String tipoUsuario) {
         int opcao = 0;
 
         do {
-            System.out.println("\n==== Menu Cliente Juridico ====");
-            System.out.println("1 - Cadastra Cliente");
-            System.out.println("2 - Listar Clientes");
-            System.out.println("3 - Remover Cliente");
-            System.out.println("4 - Altera Cliente");
+            System.out.println("\n==== Menu Cliente Jurídico ====");
+            System.out.println("1 - Cadastrar Cliente");
+            if (!tipoUsuario.equals("Cliente")) {
+                System.out.println("2 - Listar Clientes");
+                System.out.println("3 - Remover Cliente");
+                System.out.println("4 - Alterar Cliente");
+            }
             System.out.println("5 - Buscar Cliente");
             System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
@@ -306,13 +325,25 @@ public class App {
                     cadastraClienteJuridico();
                     break;
                 case 2:
-                    listarClienteJuridico();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        listarClienteJuridico();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 3:
-                    removeClienteJuridico();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        removeClienteJuridico();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 4:
-                    alteraClienteJuridico();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        alteraClienteJuridico();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 5:
                     buscarClienteJuridico();
@@ -321,8 +352,7 @@ public class App {
                     System.out.println("Saindo do menu de Cliente!");
                     break;
                 default:
-                    System.out.println("Opção Invalida!");
-                    break;
+                    System.out.println("Opção Inválida!");
             }
         } while (opcao != 6);
     }
@@ -431,15 +461,17 @@ public class App {
 
     }
 
-    public static void menuCategoria() {
+    public static void menuCategoria(String tipoUsuario) {
         int opcao = 0;
 
         do {
             System.out.println("\n==== Menu Categoria ====");
-            System.out.println("1 - Cria Categoria");
-            System.out.println("2 - Listar Categoria");
-            System.out.println("3 - Remover Categoria");
-            System.out.println("4 - Altera Categoria");
+            System.out.println("1 - Criar Categoria");
+            if (!tipoUsuario.equals("Cliente")) {
+                System.out.println("2 - Listar Categoria");
+                System.out.println("3 - Remover Categoria");
+                System.out.println("4 - Alterar Categoria");
+            }
             System.out.println("5 - Buscar Categoria");
             System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
@@ -450,23 +482,34 @@ public class App {
                     cadastraCategoria();
                     break;
                 case 2:
-                    listarCategoria();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        listarCategoria();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 3:
-                    removerCategoria();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        removerCategoria();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 4:
-                    alteraCategoria();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        alteraCategoria();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 5:
                     buscarCategoria();
                     break;
                 case 6:
-                    System.out.println("Saindo do menu de categorias! ");
+                    System.out.println("Saindo do menu de categorias!");
                     break;
                 default:
-                    System.out.println("Opção Invalida!");
-                    break;
+                    System.out.println("Opção Inválida!");
             }
         } while (opcao != 6);
     }
@@ -568,15 +611,17 @@ public class App {
 
     }
 
-    public static void menuDocumento() {
+    public static void menuDocumento(String tipoUsuario) {
         int opcao = 0;
 
         do {
             System.out.println("\n==== Menu Documento ====");
             System.out.println("1 - Salvar Documento");
-            System.out.println("2 - Listar Documento");
-            System.out.println("3 - Remover Documento");
-            System.out.println("4 - Altera Documento");
+            if (!tipoUsuario.equals("Cliente")) {
+                System.out.println("2 - Listar Documento");
+                System.out.println("3 - Remover Documento");
+                System.out.println("4 - Alterar Documento");
+            }
             System.out.println("5 - Buscar Documento");
             System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
@@ -587,13 +632,25 @@ public class App {
                     cadastraDocumento();
                     break;
                 case 2:
-                    listarDocumento();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        listarDocumento();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 3:
-                    removeDocumento();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        removeDocumento();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 4:
-                    alteraDocumento();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        alteraDocumento();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 5:
                     buscarDocumento();
@@ -602,8 +659,7 @@ public class App {
                     System.out.println("Saindo do menu de documentos!");
                     break;
                 default:
-                    System.out.println("Opção Invalida!");
-                    break;
+                    System.out.println("Opção Inválida!");
             }
         } while (opcao != 6);
     }
@@ -697,24 +753,33 @@ public class App {
             System.out.println("Nenhum documento encontrado.");
         } else {
             for (Documento documento : documentos) {
+                System.out.println("====== Informações do documento ====");
                 System.out.println("ID: " + documento.getIdDocumento());
                 System.out.println("Nome: " + documento.getNomeDocumento());
                 System.out.println("Descrição: " + documento.getDescricaoDocumento());
 
                 // Nome da categoria
                 if (documento.getCategoria() != null) {
-                    System.out.println("Categoria: " + documento.getCategoria().getNomeCategoria());
+                    System.out.println("====== Categoria ======");
+                    System.out.println("Nome da Categoria: " + documento.getCategoria().getNomeCategoria());
                 }
 
                 // Nome do cliente (pode ser físico ou jurídico)
                 if (documento.getClientefisico() != null) {
+                    System.out.println("====== Informação do cliente Fisico ======");
                     System.out.println("Cliente Físico: " + documento.getClientefisico().getNomeCliente());
+                    System.out.println("CPF: " +  documento.getClientefisico().getCPF());
+                    System.out.println("Codigo do cliente: " + documento.getClientefisico().getCodigoCliente());
                 } else if (documento.getClientejuridico() != null) {
+                    System.out.println("====== Informação do cliente Juridico ======");
                     System.out.println("Cliente Jurídico: " + documento.getClientejuridico().getNomeCliente());
+                    System.out.println("CNPJ: " + documento.getClientejuridico().getCNPJ());
+                    System.out.println("Codigo do cliente: " + documento.getClientejuridico().getCodigoCliente());
                 }
 
                 // Nome do fornecedor
                 if (documento.getFornecedor() != null) {
+                    System.out.println("====== Informação do Fornecedor ======");
                     System.out.println("Fornecedor: " + documento.getFornecedor().getNomeFornecedor());
                 }
 
@@ -818,28 +883,47 @@ public class App {
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
-        Documento doc = DocuServi.buscarPorId(codigo);
+        Documento documento = DocuServi.buscarPorId(codigo);
 
-        if (doc != null) {
-            System.out.println("========= Informações do documento =========");
-            System.out.println("ID: " + doc.getIdDocumento());
-            System.out.println("Nome: " + doc.getNomeDocumento());
-            System.out.println("Descrição: " + doc.getDescricaoDocumento());
-            System.out.println(
-                    "Categoria: " + (doc.getCategoria() != null ? doc.getCategoria().getNomeCategoria() : "N/A"));
-            System.out.println("Cliente: " +
-                    (doc.getClientefisico() != null ? doc.getClientefisico().getNomeCliente()
-                            : doc.getClientejuridico() != null ? doc.getClientejuridico().getNomeCliente() : "N/A"));
-            System.out.println(
-                    "Fornecedor: " + (doc.getFornecedor() != null ? doc.getFornecedor().getNomeFornecedor() : "N/A"));
-            System.out.println("---------------------------------------------");
+        if (documento != null) {
+            System.out.println("\n====== Informações do documento ====");
+                System.out.println("ID: " + documento.getIdDocumento());
+                System.out.println("Nome: " + documento.getNomeDocumento());
+                System.out.println("Descrição: " + documento.getDescricaoDocumento());
+
+                // Nome da categoria
+                if (documento.getCategoria() != null) {
+                    System.out.println("====== Categoria ======");
+                    System.out.println("Nome da Categoria: " + documento.getCategoria().getNomeCategoria());
+                }
+
+                // Nome do cliente (pode ser físico ou jurídico)
+                if (documento.getClientefisico() != null) {
+                    System.out.println("====== Informação do cliente Fisico ======");
+                    System.out.println("Cliente Físico: " + documento.getClientefisico().getNomeCliente());
+                    System.out.println("CPF: " +  documento.getClientefisico().getCPF());
+                    System.out.println("Codigo do cliente: " + documento.getClientefisico().getCodigoCliente());
+                } else if (documento.getClientejuridico() != null) {
+                    System.out.println("====== Informação do cliente Juridico ======");
+                    System.out.println("Cliente Jurídico: " + documento.getClientejuridico().getNomeCliente());
+                    System.out.println("CNPJ: " + documento.getClientejuridico().getCNPJ());
+                    System.out.println("Codigo do cliente: " + documento.getClientejuridico().getCodigoCliente());
+                }
+
+                // Nome do fornecedor
+                if (documento.getFornecedor() != null) {
+                    System.out.println("====== Informação do Fornecedor ======");
+                    System.out.println("Fornecedor: " + documento.getFornecedor().getNomeFornecedor());
+                }
+
+                System.out.println("---------------------------");
 
             System.out.print("Deseja fazer download do arquivo? (S/N): ");
             String opcao = teclado.nextLine();
 
             if (opcao.equalsIgnoreCase("S")) {
 
-                String caminhoArquivo = doc.getCaminhoArquivo();
+                String caminhoArquivo = documento.getCaminhoArquivo();
 
                 if (caminhoArquivo == null || caminhoArquivo.isBlank()) {
                     System.out.println("Erro: O caminho do arquivo não está salvo no documento.");
@@ -848,7 +932,7 @@ public class App {
                 System.out.print("Digite o caminho de destino (Ex.: C:\\Users\\SeuUsuario\\Downloads): ");
                 String destinoStr = teclado.nextLine();
 
-                Path origem = Paths.get(doc.getCaminhoArquivo());
+                Path origem = Paths.get(documento.getCaminhoArquivo());
                 Path destino = Paths.get(destinoStr, origem.getFileName().toString());
 
                 try {
@@ -864,15 +948,17 @@ public class App {
         }
     }
 
-    public static void menuFornecedor() {
+    public static void menuFornecedor(String tipoUsuario) {
         int opcao = 0;
 
         do {
             System.out.println("\n==== Menu Fornecedor ====");
-            System.out.println("1 - Cadastra Fornecedor");
-            System.out.println("2 - Listar Fornecedor");
-            System.out.println("3 - Remover Fornecedor");
-            System.out.println("4 - Altera Fornecedor");
+            System.out.println("1 - Cadastrar Fornecedor");
+            if (!tipoUsuario.equals("Cliente")) {
+                System.out.println("2 - Listar Fornecedor");
+                System.out.println("3 - Remover Fornecedor");
+                System.out.println("4 - Alterar Fornecedor");
+            }
             System.out.println("5 - Buscar Fornecedor");
             System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
@@ -883,13 +969,25 @@ public class App {
                     cadastrarFornecedor();
                     break;
                 case 2:
-                    listarFornecedor();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        listarFornecedor();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 3:
-                    removerFornecedor();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        removerFornecedor();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 4:
-                    alterarFornecedor();
+                    if (!tipoUsuario.equals("Cliente")) {
+                        alterarFornecedor();
+                    } else {
+                        System.out.println("Acesso negado.");
+                    }
                     break;
                 case 5:
                     buscarFornecedor();
@@ -898,8 +996,7 @@ public class App {
                     System.out.println("Saindo do menu fornecedores!");
                     break;
                 default:
-                    System.out.println("Opção Invalida!");
-                    break;
+                    System.out.println("Opção Inválida!");
             }
         } while (opcao != 6);
     }
@@ -907,7 +1004,7 @@ public class App {
     private static void cadastrarFornecedor() {
         System.out.println("\n==== Cadastrar Fornecedor ====");
 
-        teclado.nextLine(); // Quebra de linha
+        teclado.nextLine();
 
         System.out.print("CNPJ do Fornecedor: ");
         String cnpj = teclado.nextLine();
@@ -1017,16 +1114,18 @@ public class App {
         }
     }
 
-    public static void menuUsuario() {
+    public static void menuUsuario(String tipoUsuario) {
         int opcao = 0;
 
         do {
             System.out.println("\n==== Menu Usuario ====");
             System.out.println("1 - Cadastra Usuario");
-            System.out.println("2 - Listar Usuario");
-            System.out.println("3 - Remover Usuario");
-            System.out.println("4 - Altera Usuario");
-            System.out.println("5 - Buscar Usuario");
+            if (!tipoUsuario.equals("Funcionario")) {
+                System.out.println("2 - Listar Usuario");
+                System.out.println("3 - Remover Usuario");
+                System.out.println("4 - Altera Usuario");
+                System.out.println("5 - Buscar Usuario");
+            }
             System.out.println("6 - Sair");
             System.out.print("Sua escolha: ");
             opcao = teclado.nextInt();
@@ -1036,16 +1135,32 @@ public class App {
                     cadastraUsuario();
                     break;
                 case 2:
-                    listarUsuario();
+                    if(!tipoUsuario.equals("Funcionario")){
+                        listarUsuario();
+                    } else {
+                        System.out.println("Acesso negado");
+                    }
                     break;
                 case 3:
-                    removerUsuario();
+                    if(!tipoUsuario.equals("Funcionario")){
+                        removerUsuario();
+                    } else {
+                        System.out.println("Sem permissão");
+                    }
                     break;
                 case 4:
-                    alteraUsuario();
+                    if(!tipoUsuario.equals("Funcionario")){
+                        alteraUsuario();
+                    } else {
+                        System.out.println("Sem permissão");
+                    }
                     break;
                 case 5:
-                    buscarUsuario();
+                    if(!tipoUsuario.equals("Funcionario")){
+                        buscarUsuario();
+                    } else {
+                        System.out.println("Sem permissão");
+                    }
                     break;
                 case 6:
                     System.out.println("Saindo do menu de usuarios!");
@@ -1076,13 +1191,17 @@ public class App {
         System.out.print("Senha: ");
         String senha = teclado.nextLine();
 
-        if (CPF.trim().isEmpty() || nome.trim().isEmpty() || email.trim().isEmpty() || senha.trim().isEmpty()) {
+        System.out.print("Tipo de usuario(Cliente/Funcionario/ADM):");
+        String tipo = teclado.nextLine();
+
+        if (CPF.trim().isEmpty() || nome.trim().isEmpty() || email.trim().isEmpty() || senha.trim().isEmpty()
+                || tipo.trim().isEmpty()) {
             System.out.println("Por favor, preencha todas as informações corretamente");
             return;
         }
 
         try {
-            Usuario usuario = new Usuario(id, nome, email, senha, CPF);
+            Usuario usuario = new Usuario(id, nome, email, senha, CPF, tipo);
             UsuServi.cadastra(usuario);
         } catch (Exception e) {
             System.out.println("Erro ao tenta cadastrar Usuario");
@@ -1103,6 +1222,7 @@ public class App {
                 System.out.println("Email: " + usuario.getEmailUsuario());
                 System.out.println("Senha: " + usuario.getSenhaUsuario());
                 System.out.println("CPF: " + usuario.getCpf());
+                System.out.println("Tipo de acesso: " + usuario.getTipoUsuario());
                 System.out.println("---------------------------");
             }
         }
@@ -1145,13 +1265,16 @@ public class App {
             System.out.print("Novo CPF: ");
             String novoCPF = teclado.nextLine();
 
+            System.out.println("Novo tipo de usuario: ");
+            String novoTipo = teclado.nextLine();
+
             if (novoNome.trim().isEmpty() || novoEmail.trim().isEmpty() || novaSenha.trim().isEmpty()
                     || novoCPF.trim().isEmpty()) {
                 System.out.println("Por favor, preencha todos os campos corretamente");
                 return;
             }
 
-            Usuario usuarios = new Usuario(codigo, novoNome, novoEmail, novaSenha, novoCPF);
+            Usuario usuarios = new Usuario(codigo, novoNome, novoEmail, novaSenha, novoCPF, novoTipo);
             UsuServi.alteraUsuario(usuarios);
             System.out.println("Usuário atualizado com sucesso.");
         } else {
