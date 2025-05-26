@@ -252,7 +252,7 @@ public class App {
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Você deseja remove esse cliente? (S/N): ");
+        System.out.print("Você deseja remover esse cliente? (S/N): ");
         String resposta = teclado.nextLine();
 
         if (resposta.equals("S")) {
@@ -278,6 +278,10 @@ public class App {
             String novoNome = teclado.nextLine();
             System.out.print("Novo CPF: ");
             String novoCpf = teclado.nextLine();
+
+            if(novoNome.trim().isEmpty() || novoCpf.trim().isEmpty()){
+                System.out.println("Verifique os dados informados antes de salvar");
+            }
 
             ClienteFisico clientes = new ClienteFisico(codigo, novoNome, novoCpf);
             ClienteFisiServi.alteraCliente(clientes);
@@ -374,7 +378,7 @@ public class App {
 
         if (nome.trim().isEmpty() || cnpj.trim().isEmpty()) {
             System.out.println(
-                    "Não foi possível cadastrar esse cliente, por favor, preencha todas as informações com campos validos");
+                    "Não foi possível cadastrar esse cliente, por favor, preencha todas as informações");
             return;
         }
 
@@ -392,7 +396,7 @@ public class App {
         List<ClienteJuridico> clientes = ClienteJuriServi.listar();
 
         if (clientes.isEmpty()) {
-            System.out.println("Nenhum cliente encontrado.");
+            System.out.println("Nenhum cliente Juridico encontrado.");
         } else {
             for (ClienteJuridico c : clientes) {
                 System.out.println("Código: " + c.getCodigoCliente());
@@ -409,7 +413,7 @@ public class App {
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Você deseja remove esse cliente? (S/N): ");
+        System.out.print("“Deseja remover este Cliente Jurídico? (S/N): ");
         String escolha = teclado.nextLine();
 
         if (escolha.equals("S")) {
@@ -433,9 +437,14 @@ public class App {
         if (cliente != null) {
             System.out.print("Novo nome: ");
             String novoNome = teclado.nextLine();
+
             System.out.print("Novo CNPJ: ");
             String novoCNPJ = teclado.nextLine();
 
+            if(novoNome.trim().isEmpty() || novoCNPJ.trim().isEmpty()){
+                System.out.println("“Por favor, verifique se todas as informações estão corretas");
+                return;
+            }
             ClienteJuridico clientes = new ClienteJuridico(codigo, novoNome, novoCNPJ);
             ClienteJuriServi.alteraCliente(clientes);
             System.out.println("Cliente atualizado com sucesso.");
@@ -525,7 +534,7 @@ public class App {
         String nome = teclado.nextLine();
 
         if (nome.trim().isEmpty()) {
-            System.out.println("Por favor, preencha corretamente a informação");
+            System.out.println("Por favor, preencha todas as informações");
             return;
         }
 
@@ -558,7 +567,7 @@ public class App {
         int id = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Você Deseja remover essa categoria? (S/N): ");
+        System.out.print("Você deseja remover essa categoria? (S/N): ");
         String escolha = teclado.nextLine();
 
         if (escolha.equals("S")) {
@@ -678,7 +687,7 @@ public class App {
         String descricao = teclado.nextLine();
 
         if (nome.trim().isEmpty() || descricao.trim().isEmpty()) {
-            System.out.println("Por favor, preencha todas as informações corretamente.");
+            System.out.println("Preencha corretamente todos os campos.");
             return;
         }
 
@@ -712,7 +721,7 @@ public class App {
 
         if (categoria == null || fornecedor == null ||
                 (clienteFisico == null && clienteJuridico == null)) {
-            System.out.println("Erro: Categoria, fornecedor ou cliente inválido.");
+            System.out.println("Preencha corretamente todos os campos");
             return;
         }
 
@@ -800,7 +809,7 @@ public class App {
             return;
         }
 
-        System.out.print("Você deseja remover esse documento? (S/N): ");
+        System.out.print("Tem certeza que deseja excluir este documento? (S/N): ");
         String escolha = teclado.nextLine();
 
         if (escolha.equalsIgnoreCase("S")) {
@@ -829,7 +838,7 @@ public class App {
             String novaDescricao = teclado.nextLine();
 
             if (novoNome.trim().isEmpty() || novaDescricao.trim().isEmpty()) {
-                System.out.println("Por favor, Digite todas as informações corretamente!");
+                System.out.println("Não foi possível alterar esse Documento, por favor, preencha todas as informações");
                 return;
             }
 
@@ -1016,7 +1025,7 @@ public class App {
         String endereco = teclado.nextLine();
 
         if (nome.trim().isEmpty() || cnpj.trim().isEmpty() || endereco.trim().isEmpty()) {
-            System.out.println("Por favor, digite todas as informações corretamente.");
+            System.out.println("“Verifique se todas as informações do fornecedor estão corretas ou completas");
             return;
         }
 
@@ -1054,7 +1063,7 @@ public class App {
         System.out.print("Informe o CNPJ do fornecedor a ser removido: ");
         String cnpj = teclado.nextLine();
 
-        System.out.print("Você deseja remover esse fornecedor? (S/N): ");
+        System.out.print("Tem certeza que deseja remover este fornecedor? (S/N): ");
         String escolha = teclado.nextLine();
 
         if (escolha.equalsIgnoreCase("S")) {
@@ -1083,7 +1092,7 @@ public class App {
             String novoEndereco = teclado.nextLine();
 
             if (novoNome.trim().isEmpty() || novoEndereco.trim().isEmpty()) {
-                System.out.println("Por favor, preencha todas as informações corretamente.");
+                System.out.println("Por favor, Verifique os dados informado.");
                 return;
             }
 
@@ -1163,7 +1172,7 @@ public class App {
                     }
                     break;
                 case 6:
-                    System.out.println("Saindo do menu de usuarios!");
+                    System.out.println("Saindo do menu de usuarios....!");
                     break;
                 default:
                     System.out.println("Opção Invalida!");
@@ -1196,7 +1205,7 @@ public class App {
 
         if (CPF.trim().isEmpty() || nome.trim().isEmpty() || email.trim().isEmpty() || senha.trim().isEmpty()
                 || tipo.trim().isEmpty()) {
-            System.out.println("Por favor, preencha todas as informações corretamente");
+            System.out.println("Não foi possível cadastrar esse Usuario, por favor, preencha todas as informações");
             return;
         }
 
@@ -1204,7 +1213,7 @@ public class App {
             Usuario usuario = new Usuario(id, nome, email, senha, CPF, tipo);
             UsuServi.cadastra(usuario);
         } catch (Exception e) {
-            System.out.println("Erro ao tenta cadastrar Usuario");
+            System.out.println("");
         }
 
     }
@@ -1222,7 +1231,7 @@ public class App {
                 System.out.println("Email: " + usuario.getEmailUsuario());
                 System.out.println("Senha: " + usuario.getSenhaUsuario());
                 System.out.println("CPF: " + usuario.getCpf());
-                System.out.println("Tipo de acesso: " + usuario.getTipoUsuario());
+                System.out.println("Tipo de Usuario: " + usuario.getTipoUsuario());
                 System.out.println("---------------------------");
             }
         }
@@ -1234,7 +1243,7 @@ public class App {
         int codigo = teclado.nextInt();
         teclado.nextLine();
 
-        System.out.print("Deseja realmente remove esse usuario? (S/N): ");
+        System.out.print("“Tem certeza que deseja remover este usuário? (S/N): ");
         String escolha = teclado.nextLine();
         if (escolha.equals("S")) {
             boolean sucesso = UsuServi.excluir(codigo);
@@ -1270,13 +1279,13 @@ public class App {
 
             if (novoNome.trim().isEmpty() || novoEmail.trim().isEmpty() || novaSenha.trim().isEmpty()
                     || novoCPF.trim().isEmpty()) {
-                System.out.println("Por favor, preencha todos os campos corretamente");
+                System.out.println("Por favor, Verifique se todas as informações estão corretas ou completas");
                 return;
             }
 
             Usuario usuarios = new Usuario(codigo, novoNome, novoEmail, novaSenha, novoCPF, novoTipo);
             UsuServi.alteraUsuario(usuarios);
-            System.out.println("Usuário atualizado com sucesso.");
+
         } else {
             System.out.println("Usuário não encontrado.");
         }
@@ -1290,12 +1299,14 @@ public class App {
         Usuario usuariobuscar = UsuServi.buscarPorId(codigo);
 
         if (usuariobuscar != null) {
+            System.out.println("======= Informação do Usuario =======");
             System.out.println("Nome do usuario: " + usuariobuscar.getNomeUsuario());
             System.out.println("CPF: " + usuariobuscar.getCpf());
             System.out.println("Codigo: " + usuariobuscar.getId());
             System.out.println("Email: " + usuariobuscar.getEmailUsuario());
+            System.out.println("Tipo de acesso: " + usuariobuscar.getTipoUsuario());
         } else {
-            System.out.println("Cliente não encontrado!");
+            System.out.println("Usuario não encontrado!");
         }
 
     }

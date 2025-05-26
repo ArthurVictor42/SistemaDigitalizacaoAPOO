@@ -85,7 +85,7 @@ public class UsuarioRepositorioJBDC implements IUsuarioRepositorio {
             stmt.setInt(6, usuario.getId());
 
             stmt.executeUpdate();
-
+            System.out.println("Usuário atualizado com sucesso.");
             return true;
         } catch (SQLException e) {
             System.out.println("Erro ao altera Usuario: " + e.getMessage());
