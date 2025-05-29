@@ -744,7 +744,7 @@ public class App {
             Files.createDirectories(destino.getParent());
             Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
             novoDoc.setCaminhoArquivo(destino.toString());
-            System.out.println("Arquivo enviado com sucesso.");
+        
         } catch (IOException e) {
             System.out.println("Erro ao copiar o arquivo:");
             e.printStackTrace();
@@ -762,7 +762,7 @@ public class App {
             System.out.println("Nenhum documento encontrado.");
         } else {
             for (Documento documento : documentos) {
-                System.out.println("====== Informações do documento ====");
+                System.out.println("\n====== Informações do documento ====");
                 System.out.println("ID: " + documento.getIdDocumento());
                 System.out.println("Nome: " + documento.getNomeDocumento());
                 System.out.println("Descrição: " + documento.getDescricaoDocumento());
