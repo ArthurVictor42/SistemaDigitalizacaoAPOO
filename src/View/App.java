@@ -299,7 +299,7 @@ public class App {
         ClienteFisico clientebuscar = ClienteFisiServi.buscarPorCodigo(codigo);
 
         if (clientebuscar != null) {
-            System.out.println("Nome: " + clientebuscar.getNomeCliente());
+            System.out.println("\nNome: " + clientebuscar.getNomeCliente());
             System.out.println("CPF: " + clientebuscar.getCPF());
             System.out.println("Codigo: " + clientebuscar.getCodigoCliente());
         } else {
@@ -461,7 +461,7 @@ public class App {
         ClienteJuridico clientebuscar = ClienteJuriServi.buscarPorCodigo(codigo);
 
         if (clientebuscar != null) {
-            System.out.println("Nome: " + clientebuscar.getNomeCliente());
+            System.out.println("\nNome: " + clientebuscar.getNomeCliente());
             System.out.println("CPF: " + clientebuscar.getCNPJ());
             System.out.println("Codigo: " + clientebuscar.getCodigoCliente());
         } else {
@@ -612,7 +612,7 @@ public class App {
         Categoria categoriabuscar = CateServi.buscarPorId(codigo);
 
         if (categoriabuscar != null) {
-            System.out.println("Nome da categoria: " + categoriabuscar.getNomeCategoria());
+            System.out.println("\nNome da categoria: " + categoriabuscar.getNomeCategoria());
             System.out.println("ID: " + categoriabuscar.getId());
         } else {
             System.out.println("Categoria não encontrado!");
@@ -769,18 +769,18 @@ public class App {
 
                 // Nome da categoria
                 if (documento.getCategoria() != null) {
-                    System.out.println("====== Categoria ======");
+                    System.out.println("\n====== Categoria ======");
                     System.out.println("Nome da Categoria: " + documento.getCategoria().getNomeCategoria());
                 }
 
                 // Nome do cliente (pode ser físico ou jurídico)
                 if (documento.getClientefisico() != null) {
-                    System.out.println("====== Informação do cliente Fisico ======");
+                    System.out.println("\n====== Informação do cliente Fisico ======");
                     System.out.println("Cliente Físico: " + documento.getClientefisico().getNomeCliente());
                     System.out.println("CPF: " +  documento.getClientefisico().getCPF());
                     System.out.println("Codigo do cliente: " + documento.getClientefisico().getCodigoCliente());
                 } else if (documento.getClientejuridico() != null) {
-                    System.out.println("====== Informação do cliente Juridico ======");
+                    System.out.println("\n====== Informação do cliente Juridico ======");
                     System.out.println("Cliente Jurídico: " + documento.getClientejuridico().getNomeCliente());
                     System.out.println("CNPJ: " + documento.getClientejuridico().getCNPJ());
                     System.out.println("Codigo do cliente: " + documento.getClientejuridico().getCodigoCliente());
@@ -788,7 +788,7 @@ public class App {
 
                 // Nome do fornecedor
                 if (documento.getFornecedor() != null) {
-                    System.out.println("====== Informação do Fornecedor ======");
+                    System.out.println("\n====== Informação do Fornecedor ======");
                     System.out.println("Fornecedor: " + documento.getFornecedor().getNomeFornecedor());
                 }
 
@@ -902,18 +902,18 @@ public class App {
 
                 // Nome da categoria
                 if (documento.getCategoria() != null) {
-                    System.out.println("====== Categoria ======");
+                    System.out.println("\n====== Categoria ======");
                     System.out.println("Nome da Categoria: " + documento.getCategoria().getNomeCategoria());
                 }
 
                 // Nome do cliente (pode ser físico ou jurídico)
                 if (documento.getClientefisico() != null) {
-                    System.out.println("====== Informação do cliente Fisico ======");
+                    System.out.println("\n====== Informação do cliente Fisico ======");
                     System.out.println("Cliente Físico: " + documento.getClientefisico().getNomeCliente());
                     System.out.println("CPF: " +  documento.getClientefisico().getCPF());
                     System.out.println("Codigo do cliente: " + documento.getClientefisico().getCodigoCliente());
                 } else if (documento.getClientejuridico() != null) {
-                    System.out.println("====== Informação do cliente Juridico ======");
+                    System.out.println("\n====== Informação do cliente Juridico ======");
                     System.out.println("Cliente Jurídico: " + documento.getClientejuridico().getNomeCliente());
                     System.out.println("CNPJ: " + documento.getClientejuridico().getCNPJ());
                     System.out.println("Codigo do cliente: " + documento.getClientejuridico().getCodigoCliente());
@@ -921,7 +921,7 @@ public class App {
 
                 // Nome do fornecedor
                 if (documento.getFornecedor() != null) {
-                    System.out.println("====== Informação do Fornecedor ======");
+                    System.out.println("\n====== Informação do Fornecedor ======");
                     System.out.println("Fornecedor: " + documento.getFornecedor().getNomeFornecedor());
                 }
 
@@ -1115,7 +1115,7 @@ public class App {
         Fornecedor f = FornServi.buscarPorCNPJ(cnpj);
 
         if (f != null) {
-            System.out.println("Nome do Fornecedor: " + f.getNomeFornecedor());
+            System.out.println("\nNome do Fornecedor: " + f.getNomeFornecedor());
             System.out.println("CNPJ: " + f.getCNPJ());
             System.out.println("Endereço do Fornecedor: " + f.getEnderecoFornecedor());
         } else {
@@ -1299,7 +1299,7 @@ public class App {
         Usuario usuariobuscar = UsuServi.buscarPorId(codigo);
 
         if (usuariobuscar != null) {
-            System.out.println("======= Informação do Usuario =======");
+            System.out.println("\n======= Informação do Usuario =======");
             System.out.println("Nome do usuario: " + usuariobuscar.getNomeUsuario());
             System.out.println("CPF: " + usuariobuscar.getCpf());
             System.out.println("Codigo: " + usuariobuscar.getId());
